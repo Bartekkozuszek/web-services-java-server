@@ -1,7 +1,6 @@
 package server;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
@@ -15,10 +14,10 @@ public class HTTPServer implements Runnable{
     static List<HTTPMethod> httpMethods = new ArrayList();
     private static List<RequestHandler> functions = new ArrayList<RequestHandler>();
 
-    private Socket socket;
+    private Socket clientSocket;
 
-    public HTTPServer(Socket socket) {
-        this.socket = socket;
+    public HTTPServer(Socket clientSocket) {
+        this.clientSocket = clientSocket;
     }
 
     public void run() {
@@ -35,7 +34,7 @@ public class HTTPServer implements Runnable{
         BufferedInputStream dataOut = null;
 
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String input = in.readLine();
             System.out.println("input: " + input + "-------");
             StringTokenizer parse = new StringTokenizer(input);
@@ -47,8 +46,8 @@ public class HTTPServer implements Runnable{
                 String name = method.getClass().getSimpleName().toUpperCase();
                 name = name.substring(name.indexOf("P") + 1);
                 if(name.equals(HTTPMethod)){
-                   ResponseObject response = method.execute(request, socket);
-                   handleOutput(response, socket);
+                   ResponseObject response = method.execute(request, clientSocket);
+                   handleOutput(response, clientSocket);
                 }
                 System.out.println(name);
                 System.out.println(httpMethods.size());
@@ -59,29 +58,7 @@ public class HTTPServer implements Runnable{
         }
     }
 
-    public static void main(String[] args) {
 
-        httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
-        functions.add(new Calculator());
-
-        try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            System.out.println("Server started.\nListening for connections on port: "
-                + PORT + "...");
-
-            while (true){
-                HTTPServer server = new HTTPServer(serverSocket.accept());
-
-                if(verbose) System.out.println("Connection established. " + new Date());
-
-                Thread thread = new Thread(server);
-                thread.start();
-            }
-
-        } catch (IOException e) {
-            System.err.println("Server connection error" + e.getMessage());
-        }
-    }
 
     private void handleOutput(ResponseObject response, Socket clientSocket){
 
@@ -112,7 +89,13 @@ public class HTTPServer implements Runnable{
 
     }
 
+
     public static List<RequestHandler> getFunctions() {
         return functions;
+    }
+
+
+    public static void setFunctions(List<RequestHandler> functions) {
+        HTTPServer.functions = functions;
     }
 }
