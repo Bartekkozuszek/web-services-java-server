@@ -2,14 +2,13 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HTTPGet implements HTTPMethod {
 
-    //Map<String, String> params = new HashMap<String, String>();
-    //private Socket clientSocket;
+
+
     private ResponseObject response = new ResponseObject();
     private int index;
 
@@ -17,9 +16,8 @@ public class HTTPGet implements HTTPMethod {
     static final String DEFAULT_FILE = "index.html";
 
 
-    public ResponseObject execute(String request, Socket clientSocket) {
 
-        System.out.println("request i head: " + request);
+    public ResponseObject execute(String request, Socket clientSocket) {
 
         String intention = parseRequest(request);
         System.out.println("intention: " + intention);
@@ -38,11 +36,12 @@ public class HTTPGet implements HTTPMethod {
             //handleOutput(response, clientSocket);
 
         }else{
+
             File file = new File(WEB_ROOT,request);
-            if(!file.exists()){
-                System.out.println(request + " file not found");
-                response.setErrorMessage("file_not_found");
-                return response;
+
+            if(!file.exists()) {
+
+                file = new File(WEB_ROOT, "404.html");
             }
 
             int fileLength = (int)file.length();
@@ -57,6 +56,7 @@ public class HTTPGet implements HTTPMethod {
         }
         return response;
     }
+
 
 
     private byte [] readFileData(File file, int fileLength){
@@ -85,6 +85,7 @@ public class HTTPGet implements HTTPMethod {
     }
 
 
+
     private Map<String, String> parseParams(String request){
 
         Map<String, String> params = new HashMap<String, String>();
@@ -101,6 +102,7 @@ public class HTTPGet implements HTTPMethod {
     }
 
 
+
     private String parseRequest(String request){
         System.out.println("request length: " + request.length());
         System.out.println("request: " + request);
@@ -112,10 +114,12 @@ public class HTTPGet implements HTTPMethod {
     }
 
 
+
     private String parseFuncName(String request){
 
         return request.substring(index + 1, request.indexOf("?", index + 1));
     }
+
 
 
     private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
@@ -128,6 +132,8 @@ public class HTTPGet implements HTTPMethod {
         }
         return null;
     }
+
+
 
     private String getContentType(String request){
 
