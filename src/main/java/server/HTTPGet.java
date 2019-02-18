@@ -33,7 +33,6 @@ public class HTTPGet implements HTTPMethod {
 
             response = runFunction(funcName, request, params);
 
-            //handleOutput(response, clientSocket);
 
         }else{
 
