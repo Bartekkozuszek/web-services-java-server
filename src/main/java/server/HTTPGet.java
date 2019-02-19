@@ -1,7 +1,6 @@
 package server;
 
 import java.io.*;
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,72 +16,84 @@ public class HTTPGet implements HTTPMethod {
 
 
 
-    public ResponseObject execute(String request, Socket clientSocket) {
+    public ResponseObject execute(RequestObject request, ResponseObject response) {
 
-        String intention = parseRequest(request);
-        System.out.println("intention: " + intention);
-        if (intention.equals("function")){
+//TODO om file: sätt ihop ett responsobject och ett request object och lägg request obj i respons obj, gör detta i httpserver
+// eller i en egen klass
+//TODO när objecten är klara skickes de till rätt metod
+//TODO om function anges körs en param function sen hämtas rätt function som tar request obj bara som körs och fyller i response
+//TODO detta respons object går sedan till rätt http metod
+//TODO ex. function echoJson tar request object och bygger ett response object som sedan går till GET och hanteras där.
+//TODO ex. function/addcostumer är post function. request object sätts i http server och skickas till function addcostumer som hanterar
+// hämtar och parsar bodyn från request object utför operationer på en lista och stoppar in relevant data i response object
+// som sedan skickas till POST som hämtar och outputtar relevant info.
+//TODO skillnaden på post och get är att vid post hämtar vi info från bodyn istället för i url?
+//TODO behövs en implementation för både get och post eller kan de skötas från samma?
 
-            Map<String, String> params = parseParams(request);
-            System.out.println("params: ");
-            for (String param: params.values()) {
-                System.out.println(param);
-            }
-            String funcName = parseFuncName(request);
-            System.out.println("funcName: " + funcName);
-
-            response = runFunction(funcName, request, params);
-
-            //handleOutput(response, clientSocket);
-
-        }else{
-
-            File file = new File(WEB_ROOT,request);
-
-            if(!file.exists()) {
-
-                file = new File(WEB_ROOT, "404.html");
-            }
-
-            int fileLength = (int)file.length();
-            byte [] requestedFile = readFileData(file, fileLength);
-
-            System.out.println("request: " + request);
-            System.out.println("file: " + file);
-
-            response.setContentType(getContentType(request));
-            response.setContentLength(fileLength);
-            response.setData(requestedFile);
-        }
+//        String intention = parseRequest(request);
+//        System.out.println("intention: " + intention);
+//        if (intention.equals("function")){
+//
+//            Map<String, String> params = parseParams(request);
+//            System.out.println("params: ");
+//            for (String param: params.values()) {
+//                System.out.println(param);
+//            }
+//            String funcName = parseFuncName(request);
+//            System.out.println("funcName: " + funcName);
+//
+//            response = runFunction(funcName, request, params);
+//
+//            //handleOutput(response, clientSocket);
+//
+//        }else{
+//
+//            File file = new File(WEB_ROOT,request);
+//
+//            if(!file.exists()) {
+//
+//                file = new File(WEB_ROOT, "404.html");
+//            }
+//
+//            int fileLength = (int)file.length();
+//            byte [] requestedFile = readFileData(file, fileLength);
+//
+//            System.out.println("request: " + request);
+//            System.out.println("file: " + file);
+//
+//            response.setContentType(getContentType(request));
+//            response.setContentLength(fileLength);
+//            response.setData(requestedFile);
+//        }
         return response;
     }
 
 
 
-    private byte [] readFileData(File file, int fileLength){
-
-        FileInputStream fileIn = null;
-
-        byte [] data = new byte [fileLength];
-
-        try{
-            fileIn = new FileInputStream(file);
-            fileIn.read(data);
-
-        }catch(IOException e){
-
-        }finally {
-            if(fileIn != null){
-                try{
-                    fileIn.close();
-                }catch (IOException e){
-
-                }
-
-            }
-        }
-        return data;
-    }
+//    private byte [] readFileData(File file, int fileLength){
+//
+//        FileInputStream fileIn = null;
+//
+//        byte [] data = new byte [fileLength];
+//
+//        try{
+//            fileIn = new FileInputStream(file);
+//            fileIn.read(data);
+//
+//        }catch(IOException e){
+//
+//        }finally {
+//            if(fileIn != null){
+//                try{
+//                    fileIn.close();
+//                }catch (IOException e){
+//
+//                }
+//
+//            }
+//        }
+//        return data;
+//    }
 
 
 
@@ -103,15 +114,7 @@ public class HTTPGet implements HTTPMethod {
 
 
 
-    private String parseRequest(String request){
-        System.out.println("request length: " + request.length());
-        System.out.println("request: " + request);
 
-        index = request.indexOf("/", 1);
-        System.out.println("index: " + index);
-
-        return request.substring(1, index);
-    }
 
 
 

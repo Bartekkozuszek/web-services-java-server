@@ -14,6 +14,8 @@ public class HTTPServer implements Runnable{
     static List<HTTPMethod> httpMethods = new ArrayList();
     private static List<RequestHandler> functions = new ArrayList<RequestHandler>();
 
+    private int index;
+
     private Socket clientSocket;
 
     public HTTPServer(Socket clientSocket) {
@@ -29,35 +31,186 @@ public class HTTPServer implements Runnable{
 
     private void handleRequest() {
 
-        BufferedReader in = null;
-        PrintWriter out = null;
-        BufferedInputStream dataOut = null;
+        RequestObject request = requestToObject(clientSocket);
+    }
 
-        try {
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String input = in.readLine();
-            System.out.println("input: " + input + "-------");
-            StringTokenizer parse = new StringTokenizer(input);
-            String HTTPMethod = parse.nextToken().toUpperCase();
-            System.out.println("http method: " + HTTPMethod);
-            String request = parse.nextToken().toLowerCase();
 
-            for (HTTPMethod method: httpMethods) {
-                String name = method.getClass().getSimpleName().toUpperCase();
-                name = name.substring(name.indexOf("P") + 1);
-                if(name.equals(HTTPMethod)){
-                   ResponseObject response = method.execute(request, clientSocket);
-                   handleOutput(response, clientSocket);
-                }
-                System.out.println(name);
-                System.out.println(httpMethods.size());
+    private ResponseObject checkIntent(String requestUrl){
+
+        ResponseObject response = new ResponseObject();
+
+        String intention = parseRequest(requestUrl);
+        System.out.println("intention: " + intention);
+        if (intention.equals("function")){
+
+            Map<String, String> params = parseParams(requestUrl);
+            System.out.println("params: ");
+            for (String param: params.values()) {
+                System.out.println(param);
+            }
+            String funcName = parseFuncName(requestUrl);
+            System.out.println("funcName: " + funcName);
+
+            response = runFunction(funcName, requestUrl, params);
+
+        }else{
+
+            File file = new File(WEB_ROOT,requestUrl);
+
+            if(!file.exists()) {
+
+                file = new File(WEB_ROOT, "404.html");
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            int fileLength = (int)file.length();
+            byte [] requestedFile = readFileData(file, fileLength);
+
+            System.out.println("request: " + requestUrl);
+            System.out.println("file: " + file);
+
+            response.setContentType(getContentType(requestUrl));
+            response.setContentLength(fileLength);
+            response.setData(requestedFile);
+        }
+        return response;
+    }
+
+
+    private String parseRequest(String request){
+        System.out.println("request length: " + request.length());
+        System.out.println("request: " + request);
+
+        index = request.indexOf("/", 1);
+        System.out.println("index: " + index);
+
+        return request.substring(1, index);
+    }
+
+
+    private Map<String, String> parseParams(String request){
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        if(request.contains("?") && request.contains("=")){
+            String [] tempParams = request.split("&");
+            for (String item: tempParams) {
+                String [] tempParam = item.split("=");
+                params.put(tempParam[0], tempParam[1]);
+            }
+            return params;
+        }
+        return null;
+    }
+
+
+    private String parseFuncName(String request){
+
+        return request.substring(index + 1, request.indexOf("?", index + 1));
+    }
+
+
+    private String getContentType(String request){
+
+        if(request.endsWith(".htm") || request.endsWith(".html")){
+
+            return "text/html";
+        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
+            return "image/jpg";
+        }else{
+            return "text/plain";
         }
     }
 
+
+    private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
+
+        for (RequestHandler function: HTTPServer.getFunctions()) {
+
+            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
+                return function.handleRequest(request, params);
+            }
+        }
+        return null;
+    }
+
+
+    private byte [] readFileData(File file, int fileLength){
+
+        FileInputStream fileIn = null;
+
+        byte [] data = new byte [fileLength];
+
+        try{
+            fileIn = new FileInputStream(file);
+            fileIn.read(data);
+
+        }catch(IOException e){
+
+        }finally {
+            if(fileIn != null){
+                try{
+                    fileIn.close();
+                }catch (IOException e){
+
+                }
+
+            }
+        }
+        return data;
+    }
+
+    private RequestObject requestToObject(Socket clientSocket){
+
+        List<String> requestStrings = new ArrayList<String>();
+        Map<String, String> params;
+        Map<String, String> requestData = new HashMap<String, String>();
+        BufferedReader rawRequest = null;
+        RequestObject request = new RequestObject();
+
+        try{
+
+            rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
+            requestData.put("method", parse.nextToken());
+            params = parseParams(parse.nextToken());
+            requestData.put("version", parse.nextToken());
+            String line = null;
+
+            while((line = rawRequest.readLine()) != null) {
+                if (line.contains("content-type")) {
+                    String type = line.substring(line.indexOf(": "), line.length());
+                    requestData.put("content-type", type);
+                } else if (line.contains("content-length")) {
+                    String length = line.substring(line.indexOf(": ", line.length()));
+                    requestData.put("content-length", length);
+
+                } else if (!line.contains(":") && !line.contains("")) {
+                    requestData.put("body", line);
+                }
+            }
+
+        }catch(java.io.IOException e){
+            System.out.println(e.getMessage());
+        }
+//TODO parseParams() kan parsa både från body och url, samma resultat
+
+        return request;
+    }
+
+    private Map<String, String> parseStrings(List<String> strings){
+        String body = null;
+        for (String line : strings) {
+            if(line.contains("content-type")){
+                line.substring(line.indexOf(": "), line.length());
+            }
+            if(!line.contains(":") && !line.contains("")){
+                body = line;
+            }
+
+        }
+        System.out.println("body: " + body);
+        return null;
+    }
 
 
     private void handleOutput(ResponseObject response, Socket clientSocket){
