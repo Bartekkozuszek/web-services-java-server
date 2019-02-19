@@ -1,5 +1,7 @@
 package server;
 
+import api.HTTPModule;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.io.IOException;
 //TODO maybe a base HTTPModule object with readfileData() and other methods, all modules might want to convert a file to byte[]
 //TODO base object can have default files for method not supported, file not found etc..
 
-public class FilesModule extends HTTPModule{
+public class FilesModule extends HTTPModule {
 
 
     static final File WEB_ROOT = new File(".");

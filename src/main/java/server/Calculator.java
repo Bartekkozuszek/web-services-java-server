@@ -1,7 +1,4 @@
-package api;
-
-import server.RequestHandler;
-import server.ResponseObject;
+package server;
 
 import java.util.ArrayList;
 import java.util.List;

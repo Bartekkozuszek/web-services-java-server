@@ -1,6 +1,8 @@
-package server;
+package api;
 
 import api.HTTPMethods;
+import server.RequestObject;
+import server.ResponseObject;
 
 public abstract class HTTPModule implements HTTPMethods {
 
