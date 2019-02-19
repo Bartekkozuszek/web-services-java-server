@@ -1,5 +1,7 @@
 package server;
 
+import api.HTTPMethods;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
@@ -7,14 +9,12 @@ import java.util.*;
 public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
-    static final String FILE_NOT_FOUND ="404.html";
-    static final String DEFAULT_FILE = "src/index.html";
-    static final File WEB_ROOT = new File(".");
+    //static final String FILE_NOT_FOUND ="404.html";
+    //static final String DEFAULT_FILE = "src/index.html";
+    //static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
-    static List<HTTPMethods> httpMethods = new ArrayList();
-    //private static List<RequestHandler> functions = new ArrayList<RequestHandler>();
 
-    private static Map<String, String> functions = new HashMap<String, String>();
+    private static Map<String, HTTPMethods> functions = new HashMap<String, HTTPMethods>();
 
     private int index;
 
@@ -24,65 +24,35 @@ public class HTTPServer implements Runnable{
         this.clientSocket = clientSocket;
     }
 
+
     public void run() {
 
         System.out.println(Thread.currentThread().getName());
+        BufferedReader rawRequest = null;
 
-        RequestObject request = requestToObject(clientSocket);
-    }
+        try{
+            rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+        }catch(java.io.IOException e){
+            System.out.println(e.getMessage());
+        }
 
-    private void handleRequest() {
-
-        RequestObject request = requestToObject(clientSocket);
+        RequestObject request = requestToObject(rawRequest);
+        ResponseObject response = new ResponseObject();
         String destination = request.getRequestData().get("destination");
+        String httpMethod = request.getRequestData().get("method");
 
         if(functions.containsKey(destination)){
-            functions.get(destination); // hämta ut en factory och instantiera ett objeckt av vald destination
+            HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
 
-        }
-
-    }
-
-
-    private ResponseObject checkIntent(String requestUrl){
-
-        ResponseObject response = new ResponseObject();
-
-        String intention = parseRequest(requestUrl);
-        System.out.println("intention: " + intention);
-        if (intention.equals("function")){
-
-            Map<String, String> params = parseParams(requestUrl);
-            System.out.println("params: ");
-            for (String param: params.values()) {
-                System.out.println(param);
+            if(httpMethod.equals("GET")){
+                response = m.get(request, response);
             }
-            String funcName = parseFuncName(requestUrl);
-            System.out.println("funcName: " + funcName);
-
-            response = runFunction(funcName, requestUrl, params);
-
-        }else{
-
-            File file = new File(WEB_ROOT,requestUrl);
-
-            if(!file.exists()) {
-
-                file = new File(WEB_ROOT, "404.html");
+            else if(httpMethod.equals("HEAD")){
+                response = m.head(request, response);
             }
-
-            int fileLength = (int)file.length();
-            byte [] requestedFile = readFileData(file, fileLength);
-
-            System.out.println("request: " + requestUrl);
-            System.out.println("file: " + file);
-
-            response.setContentType(getContentType(requestUrl));
-            response.setContentLength(fileLength);
-            response.setData(requestedFile);
         }
-        return response;
+        handleOutput(response, clientSocket);
     }
 
 
@@ -132,18 +102,6 @@ public class HTTPServer implements Runnable{
     }
 
 
-    private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
-
-//        for (RequestHandler function: HTTPServer.getFunctions()) {
-//
-//            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
-//                return function.handleRequest(request, params);
-//            }
-//        }
-        return null;
-    }
-
-
     private byte [] readFileData(File file, int fileLength){
 
         FileInputStream fileIn = null;
@@ -163,58 +121,58 @@ public class HTTPServer implements Runnable{
                 }catch (IOException e){
 
                 }
-
             }
         }
         return data;
     }
 
 
-    private RequestObject requestToObject(Socket clientSocket){
+    private RequestObject requestToObject(BufferedReader rawRequest){
 
-        List<String> requestStrings = new ArrayList<String>();
         Map<String, String> params = new HashMap<String, String>();
         Map<String, String> requestData = new HashMap<String, String>();
-        BufferedReader rawRequest = null;
         RequestObject request = new RequestObject();
 
         try{
 
-            rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            //rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
             requestData.put("method", parse.nextToken());
             String requestString = parse.nextToken();
+            requestData.put("requestString", requestString);
             params = parseParams(requestString);
             requestData.put("request", requestString);
             int index = requestString.indexOf("/", 2);
             String destination = requestString.substring(1, index);
             requestData.put("destination", destination);
             requestData.put("version", parse.nextToken());
-            String line = null;
+            String line;
 
-            while((line = rawRequest.readLine()) != null) {
+            while(rawRequest.ready()) {
+                line = rawRequest.readLine();
+
                 if (line.contains("content-type")) {
-                    String type = line.substring(line.indexOf(": "), line.length());
+                    String type = line.substring(line.indexOf(": "));
                     requestData.put("content-type", type);
-                } else if (line.contains("content-length")) {
-                    String length = line.substring(line.indexOf(": ", line.length()));
+
+                }else if (line.contains("content-length")) {
+                    String length = line.substring(line.indexOf(": "));
                     requestData.put("content-length", length);
 
-                } else if (!line.contains(":") && !line.contains("")) {
+                }else if (!line.contains(":") && !line.equals("")) {
                     requestData.put("body", line);
                 }
             }
-
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }
-//TODO parseParams() kan parsa både från body och url, samma resultat
-
         request.setRequestData(requestData);
         request.setParams(params);
 
         return request;
     }
+
+    //TODO parseParams() kan parsa både från body och url, samma resultat
 
 
     private Map<String, String> parseStrings(List<String> strings){
@@ -226,9 +184,7 @@ public class HTTPServer implements Runnable{
             if(!line.contains(":") && !line.contains("")){
                 body = line;
             }
-
         }
-        System.out.println("body: " + body);
         return null;
     }
 
@@ -247,28 +203,26 @@ public class HTTPServer implements Runnable{
             out.println();
             out.flush();
 
-
+            System.out.println("data in response: " + response.getData());
+            //[B@1f97e758
             if(response.getData() != null){
                 byte[] content = response.getData();
-                //byte[] content = respons.getHtmlObject().getBytes(Charset.forName("UTF-8"));
+                System.out.println("content: " + content);
                 dataOut.write(content);
                 dataOut.flush();
                 dataOut.close();
+            dataOut.write(content);
+            dataOut.flush();
+            dataOut.close();
             }
 
         }catch (java.io.IOException e){
-
+            System.out.println(e.getMessage());
         }
-
     }
 
 
-//    public static List<RequestHandler> getFunctions() {
-//        return functions;
-//    }
-//
-//
-//    public static void setFunctions(List<RequestHandler> functions) {
-//        HTTPServer.functions = functions;
-//    }
+    public static Map<String, HTTPMethods> getFunctions() {
+        return functions;
+    }
 }

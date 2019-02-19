@@ -1,8 +1,8 @@
 package server;
 
-import sun.misc.Request;
+import api.HTTPMethods;
 
-public abstract class HTTPModule {
+public abstract class HTTPModule implements HTTPMethods {
 
     private String notSupported(){
         StringBuilder html = new StringBuilder();
@@ -15,7 +15,7 @@ public abstract class HTTPModule {
 
         return html.toString();
     }
-    
+
 
     private ResponseObject setResponse(ResponseObject response){
         String html = notSupported();
@@ -30,7 +30,7 @@ public abstract class HTTPModule {
     public ResponseObject get(RequestObject request, ResponseObject response){
         return setResponse(response);
     }
-    public ResponseObject head(RequestObject requestObject, ResponseObject response){
+    public ResponseObject head(RequestObject request, ResponseObject response){
         return setResponse(response);
     }
     public ResponseObject post(RequestObject request, ResponseObject response){

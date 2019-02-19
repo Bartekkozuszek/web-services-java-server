@@ -2,11 +2,9 @@ package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Arrays;
 import java.util.Date;
 
 import static server.HTTPServer.PORT;
-import static server.HTTPServer.httpMethods;
 import static server.HTTPServer.verbose;
 
 public class Main {
@@ -15,6 +13,11 @@ public class Main {
 
         //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
         //HTTPServer.getFunctions().add(new Calculator());
+
+        HTTPModule files = new FilesModule();
+        HTTPServer.getFunctions().put("files", files);
+
+
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
