@@ -125,16 +125,16 @@ public class HTTPGet implements HTTPMethod {
 
 
 
-    private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
-
-        for (RequestHandler function: HTTPServer.getFunctions()) {
-
-            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
-                return function.handleRequest(request, params);
-            }
-        }
-        return null;
-    }
+//    private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
+//
+//        for (RequestHandler function: HTTPServer.getFunctions()) {
+//
+//            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
+//                return function.handleRequest(request, params);
+//            }
+//        }
+//        return null;
+//    }
 
 
 

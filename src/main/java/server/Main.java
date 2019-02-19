@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
-        HTTPServer.getFunctions().add(new Calculator());
+        //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
+        //HTTPServer.getFunctions().add(new Calculator());
 
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);

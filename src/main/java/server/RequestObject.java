@@ -14,7 +14,7 @@ public class RequestObject {
     private String contentLength;
     private String body;
 
-    private Map<String, String> request;
+    private Map<String, String> requestData;
     private Map<String, String> params;
 
     public String getHTTPMethod() {
@@ -87,5 +87,21 @@ public class RequestObject {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public Map<String, String> getRequestData() {
+        return requestData;
+    }
+
+    public void setRequestData(Map<String, String> requestData) {
+        this.requestData = requestData;
+    }
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
     }
 }

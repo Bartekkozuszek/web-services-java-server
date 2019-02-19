@@ -11,8 +11,10 @@ public class HTTPServer implements Runnable{
     static final String DEFAULT_FILE = "src/index.html";
     static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
-    static List<HTTPMethod> httpMethods = new ArrayList();
-    private static List<RequestHandler> functions = new ArrayList<RequestHandler>();
+    static List<HTTPMethods> httpMethods = new ArrayList();
+    //private static List<RequestHandler> functions = new ArrayList<RequestHandler>();
+
+    private static Map<String, String> functions = new HashMap<String, String>();
 
     private int index;
 
@@ -25,13 +27,21 @@ public class HTTPServer implements Runnable{
     public void run() {
 
         System.out.println(Thread.currentThread().getName());
-        handleRequest();
+
+        RequestObject request = requestToObject(clientSocket);
     }
 
 
     private void handleRequest() {
 
         RequestObject request = requestToObject(clientSocket);
+        String destination = request.getRequestData().get("destination");
+
+        if(functions.containsKey(destination)){
+            functions.get(destination); // hämta ut en factory och instantiera ett objeckt av vald destination
+
+        }
+
     }
 
 
@@ -124,12 +134,12 @@ public class HTTPServer implements Runnable{
 
     private ResponseObject runFunction(String functionName, String request, Map<String, String> params){
 
-        for (RequestHandler function: HTTPServer.getFunctions()) {
-
-            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
-                return function.handleRequest(request, params);
-            }
-        }
+//        for (RequestHandler function: HTTPServer.getFunctions()) {
+//
+//            if(function.getClass().getSimpleName().toLowerCase().equals(functionName)){
+//                return function.handleRequest(request, params);
+//            }
+//        }
         return null;
     }
 
@@ -159,10 +169,11 @@ public class HTTPServer implements Runnable{
         return data;
     }
 
+
     private RequestObject requestToObject(Socket clientSocket){
 
         List<String> requestStrings = new ArrayList<String>();
-        Map<String, String> params;
+        Map<String, String> params = new HashMap<String, String>();
         Map<String, String> requestData = new HashMap<String, String>();
         BufferedReader rawRequest = null;
         RequestObject request = new RequestObject();
@@ -172,7 +183,12 @@ public class HTTPServer implements Runnable{
             rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
             requestData.put("method", parse.nextToken());
-            params = parseParams(parse.nextToken());
+            String requestString = parse.nextToken();
+            params = parseParams(requestString);
+            requestData.put("request", requestString);
+            int index = requestString.indexOf("/", 2);
+            String destination = requestString.substring(1, index);
+            requestData.put("destination", destination);
             requestData.put("version", parse.nextToken());
             String line = null;
 
@@ -194,8 +210,12 @@ public class HTTPServer implements Runnable{
         }
 //TODO parseParams() kan parsa både från body och url, samma resultat
 
+        request.setRequestData(requestData);
+        request.setParams(params);
+
         return request;
     }
+
 
     private Map<String, String> parseStrings(List<String> strings){
         String body = null;
@@ -243,12 +263,12 @@ public class HTTPServer implements Runnable{
     }
 
 
-    public static List<RequestHandler> getFunctions() {
-        return functions;
-    }
-
-
-    public static void setFunctions(List<RequestHandler> functions) {
-        HTTPServer.functions = functions;
-    }
+//    public static List<RequestHandler> getFunctions() {
+//        return functions;
+//    }
+//
+//
+//    public static void setFunctions(List<RequestHandler> functions) {
+//        HTTPServer.functions = functions;
+//    }
 }
