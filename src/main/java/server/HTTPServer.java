@@ -52,9 +52,17 @@ public class HTTPServer implements Runnable{
             }
             else if(httpMethod.equals("HEAD")){
                 response = m.head(request, response);
+            } else if (httpMethod.equals("POST")){
+                response = m.post(request, response);
             }
+
+
+            //else fileNotFound();
         }
         handleOutput(response, clientSocket);
+    }
+
+    private void fileNotFound() {
     }
 
 

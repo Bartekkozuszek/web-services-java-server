@@ -4,6 +4,7 @@ import api.HTTPModule;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 //TODO make base fileobject that can have extend file and files? includes the same WEB_ROOT and so on..
@@ -52,28 +53,46 @@ public class FilesModule extends HTTPModule {
         return response;
     }
 
-//    private byte [] readFileData(File file, int fileLength){
-//
-//        byte [] data = new byte [fileLength];
-//        try (FileInputStream fileIn = new FileInputStream(file)) {
-//            fileIn.read(data);
-//
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return data;
-//    }
-//
-//
-//    private String getContentType(String request){
-//
-//        if(request.endsWith(".htm") || request.endsWith(".html")){
-//
-//            return "text/html";
-//        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
-//            return "image/jpg";
-//        }else{
-//            return "text/plain";
-//        }
-//    }
+    @Override
+    public ResponseObject post(RequestObject request, ResponseObject response){
+        ResponseObject getResponse = get(request, response);
+        response.setContentType(getResponse.getContentType());
+        response.setContentLength(getResponse.getContentLength());
+        JSONObject j = new JSONObject(request.getBody());
+        try {
+            j.writeToJson(j.readFromJson());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+
+    @Override
+    public byte [] readFileData(File file, int fileLength){
+
+        byte [] data = new byte [fileLength];
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            fileIn.read(data);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
+
+
+
+    public String getContentType(String request){
+
+        if(request.endsWith(".htm") || request.endsWith(".html")){
+
+            return "text/html";
+        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
+            return "image/jpg";
+        }else{
+            return "text/plain";
+        }
+    }
 }

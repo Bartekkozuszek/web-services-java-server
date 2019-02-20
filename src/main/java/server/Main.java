@@ -23,6 +23,8 @@ public class Main {
 
         HTTPModule files = new FilesModule();
         HTTPModule calculator = new Calculator2();
+        HTTPModule reverse = new ReverseModule();
+        HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);
         HTTPServer.getFunctions().put("calculator", calculator);
 

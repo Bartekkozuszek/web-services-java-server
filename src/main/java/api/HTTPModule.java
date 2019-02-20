@@ -1,12 +1,13 @@
 package api;
 
 import api.HTTPMethods;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 import server.RequestObject;
 import server.ResponseObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.json.*;
+import javax.json.stream.JsonGenerator;
+import java.io.*;
 
 public abstract class HTTPModule implements HTTPMethods {
 
@@ -49,21 +50,24 @@ public abstract class HTTPModule implements HTTPMethods {
         return setResponse(response);
     }
 
-    private String getContentType(String request){
+    public String getContentType(String request){
 
         if(request.endsWith(".htm") || request.endsWith(".html")){
 
             return "text/html";
         }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
             return "image/jpg";
-        }else if (request.endsWith(".png")){
+        }else if (request.endsWith(".json")){
+            return "application/json";
+        }
+        else if (request.endsWith(".png")){
             return "image/png";
         }else{
             return "text/plain";
         }
     }
 
-    private byte [] readFileData(File file, int fileLength){
+    public byte [] readFileData(File file, int fileLength){
 
         byte [] data = new byte [fileLength];
         try (FileInputStream fileIn = new FileInputStream(file)) {

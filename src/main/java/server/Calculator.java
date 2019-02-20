@@ -1,15 +1,18 @@
 package server;
 
+import api.HTTPModule;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Calculator implements RequestHandler {
+public class Calculator extends HTTPModule {
 
     //Map<String, String> params;
     //private char operator;
     private String answerType;
     double output;
+
 
 
     public ResponseObject handleRequest(String request, Map<String, String> params) {
