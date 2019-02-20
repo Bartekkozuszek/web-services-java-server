@@ -1,6 +1,7 @@
 package server;
 
 import api.HTTPModule;
+import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,7 +18,9 @@ public class Main {
         //HTTPServer.getFunctions().add(new Calculator());
 
         HTTPModule files = new FilesModule();
+        HTTPModule calculator = new Calculator2();
         HTTPServer.getFunctions().put("files", files);
+        HTTPServer.getFunctions().put("calculator", calculator);
 
 
 

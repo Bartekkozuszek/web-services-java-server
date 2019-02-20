@@ -41,6 +41,7 @@ public class HTTPServer implements Runnable{
         ResponseObject response = new ResponseObject();
         String destination = request.getRequestData().get("destination");
         String httpMethod = request.getRequestData().get("method");
+        System.out.println("method: " + httpMethod);
 
         if(functions.containsKey(destination)){
             HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
