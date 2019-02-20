@@ -143,7 +143,9 @@ public class HTTPServer implements Runnable{
             params = parseParams(requestString);
             requestData.put("request", requestString);
             int index = requestString.indexOf("/", 2);
+            System.out.println("requeststring: " + requestString) ;
             String destination = requestString.substring(1, index);
+            System.out.println("destination: " + destination);
             requestData.put("destination", destination);
             requestData.put("version", parse.nextToken());
             String line;
