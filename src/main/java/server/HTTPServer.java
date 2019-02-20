@@ -4,6 +4,7 @@ import api.HTTPMethods;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.*;
 
 public class HTTPServer implements Runnable{
@@ -68,16 +69,20 @@ public class HTTPServer implements Runnable{
     }
 
 
-    private Map<String, String> parseParams(String request){
+    private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
+        request = URLDecoder.decode(request, "UTF-8");
+
 
         if(request.contains("?") && request.contains("=")){
+            request = request.substring(request.indexOf("?") + 1);
             String [] tempParams = request.split("&");
             for (String item: tempParams) {
                 String [] tempParam = item.split("=");
                 params.put(tempParam[0], tempParam[1]);
             }
+            params.forEach((a,b)-> System.out.println(a + " : " + b));
             return params;
         }
         return null;
@@ -154,18 +159,24 @@ public class HTTPServer implements Runnable{
             while(rawRequest.ready()) {
                 line = rawRequest.readLine();
 
-                if (line.contains("content-type")) {
-                    String type = line.substring(line.indexOf(": "));
-                    requestData.put("content-type", type);
-
-                }else if (line.contains("content-length")) {
-                    String length = line.substring(line.indexOf(": "));
-                    requestData.put("content-length", length);
-
-                }else if (!line.contains(":") && !line.equals("")) {
+                if(line.contains(": ")){
+                    String [] keyValue = line.split(": ");
+                    requestData.put(keyValue[0], keyValue[1]);
+                }
+                else if (!line.contains(": ") && !line.equals("")) {
                     requestData.put("body", line);
                 }
+                else if(line.equals("")){
+                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
+                    rawRequest.read(body);
+                    String bodyString = new String(body);
+                    System.out.println(bodyString);
+                }
             }
+            System.out.println("request: " + requestData.get("request"));
+            System.out.println("requestData:-----------------------");
+            requestData.forEach((a,b)-> System.out.println(a + " : " + b));
+            System.out.println("requestData------------------------");
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }
@@ -217,9 +228,9 @@ public class HTTPServer implements Runnable{
                 dataOut.write(content);
                 dataOut.flush();
                 dataOut.close();
-            dataOut.write(content);
-            dataOut.flush();
-            dataOut.close();
+//            dataOut.write(content);
+//            dataOut.flush();
+//            dataOut.close();
             }
 
         }catch (java.io.IOException e){

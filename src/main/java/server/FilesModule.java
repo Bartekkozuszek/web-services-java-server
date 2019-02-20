@@ -12,7 +12,7 @@ import java.io.IOException;
 //TODO om läser in module factory var ska modules ligga, vilket paket?
 
 public class FilesModule extends HTTPModule {
-
+//annotation med runtime
 
     private static final File WEB_ROOT = new File(".");
 
@@ -52,28 +52,28 @@ public class FilesModule extends HTTPModule {
         return response;
     }
 
-    private byte [] readFileData(File file, int fileLength){
-
-        byte [] data = new byte [fileLength];
-        try (FileInputStream fileIn = new FileInputStream(file)) {
-            fileIn.read(data);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return data;
-    }
-
-
-    private String getContentType(String request){
-
-        if(request.endsWith(".htm") || request.endsWith(".html")){
-
-            return "text/html";
-        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
-            return "image/jpg";
-        }else{
-            return "text/plain";
-        }
-    }
+//    private byte [] readFileData(File file, int fileLength){
+//
+//        byte [] data = new byte [fileLength];
+//        try (FileInputStream fileIn = new FileInputStream(file)) {
+//            fileIn.read(data);
+//
+//        } catch (IOException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return data;
+//    }
+//
+//
+//    private String getContentType(String request){
+//
+//        if(request.endsWith(".htm") || request.endsWith(".html")){
+//
+//            return "text/html";
+//        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
+//            return "image/jpg";
+//        }else{
+//            return "text/plain";
+//        }
+//    }
 }

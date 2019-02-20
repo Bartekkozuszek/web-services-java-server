@@ -8,8 +8,6 @@ import java.util.Map;
 
 public class Calculator2 extends HTTPModule {
 
-    //Map<String, String> params;
-    //private char operator;
     private String answerType;
     double output;
 

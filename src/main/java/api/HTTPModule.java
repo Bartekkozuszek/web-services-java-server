@@ -4,6 +4,10 @@ import api.HTTPMethods;
 import server.RequestObject;
 import server.ResponseObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public abstract class HTTPModule implements HTTPMethods {
 
     private String notSupported(){
@@ -44,4 +48,31 @@ public abstract class HTTPModule implements HTTPMethods {
     public ResponseObject delete(RequestObject request, ResponseObject response){
         return setResponse(response);
     }
+
+    private String getContentType(String request){
+
+        if(request.endsWith(".htm") || request.endsWith(".html")){
+
+            return "text/html";
+        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
+            return "image/jpg";
+        }else if (request.endsWith(".png")){
+            return "image/png";
+        }else{
+            return "text/plain";
+        }
+    }
+
+    private byte [] readFileData(File file, int fileLength){
+
+        byte [] data = new byte [fileLength];
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            fileIn.read(data);
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return data;
+    }
+
 }
