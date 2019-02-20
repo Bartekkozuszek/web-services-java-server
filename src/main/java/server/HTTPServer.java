@@ -174,6 +174,9 @@ public class HTTPServer implements Runnable{
 
     //TODO parseParams() kan parsa både från body och url, samma resultat
 
+    //TODO CopyOnWrite arraylist är thread safe
+//TODO use AtomicLong or Int osv for threadsafe counters, counter.incrementAndGet()
+//TODO possible to overload a method for params?
 
     private Map<String, String> parseStrings(List<String> strings){
         String body = null;

@@ -9,11 +9,12 @@ import java.io.IOException;
 //TODO make base fileobject that can have extend file and files? includes the same WEB_ROOT and so on..
 //TODO maybe a base HTTPModule object with readfileData() and other methods, all modules might want to convert a file to byte[]
 //TODO base object can have default files for method not supported, file not found etc..
+//TODO om läser in module factory var ska modules ligga, vilket paket?
 
 public class FilesModule extends HTTPModule {
 
 
-    static final File WEB_ROOT = new File(".");
+    private static final File WEB_ROOT = new File(".");
 
 
     @Override
@@ -38,6 +39,7 @@ public class FilesModule extends HTTPModule {
 
         return response;
     }
+
 
     @Override
     public ResponseObject head(RequestObject request, ResponseObject response) {
