@@ -31,35 +31,35 @@ public class HTTPServer implements Runnable{
         System.out.println(Thread.currentThread().getName());
         BufferedReader rawRequest = null;
 
-        try{
+        try {
             rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        }catch(java.io.IOException e){
+
+            RequestObject request = requestToObject(rawRequest);
+            ResponseObject response = new ResponseObject();
+            String destination = request.getRequestData().get("destination");
+            String httpMethod = request.getRequestData().get("method");
+            System.out.println("method: " + httpMethod);
+
+            if (functions.containsKey(destination)) {
+                HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
+
+                if (httpMethod.equals("GET")) {
+                    response = m.get(request, response);
+                } else if (httpMethod.equals("HEAD")) {
+                    response = m.head(request, response);
+                } else if (httpMethod.equals("POST")) {
+                    response = m.post(request, response);
+                }
+
+
+                //else fileNotFound();
+            }
+            handleOutput(response, clientSocket);
+            clientSocket.close();
+        }catch(IOException e){
             System.out.println(e.getMessage());
         }
-
-        RequestObject request = requestToObject(rawRequest);
-        ResponseObject response = new ResponseObject();
-        String destination = request.getRequestData().get("destination");
-        String httpMethod = request.getRequestData().get("method");
-        System.out.println("method: " + httpMethod);
-
-        if(functions.containsKey(destination)){
-            HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
-
-            if(httpMethod.equals("GET")){
-                response = m.get(request, response);
-            }
-            else if(httpMethod.equals("HEAD")){
-                response = m.head(request, response);
-            } else if (httpMethod.equals("POST")){
-                response = m.post(request, response);
-            }
-
-
-            //else fileNotFound();
-        }
-        handleOutput(response, clientSocket);
     }
 
     private void fileNotFound() {
@@ -180,10 +180,10 @@ public class HTTPServer implements Runnable{
                     requestData.put("body", line);
                 }
                 /*else if(line.equals("")){
-                    String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
-//                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
-//                    rawRequest.read(body);
-//                     = new String(body);
+                    //String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
+                    char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
+                    rawRequest.read(body);
+                    String bodyString = new String(body);
                     System.out.println(bodyString);
                 }*/
             }

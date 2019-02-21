@@ -8,11 +8,11 @@ public class ReverseModule extends HTTPModule {
 
     private static final File WEB_ROOT = new File(".");
 
-    public File getHtmlFile() {
+    private File getHtmlFile() {
         return htmlFile;
     }
 
-    public void setHtmlFile(File htmlFile) {
+    private void setHtmlFile(File htmlFile) {
         this.htmlFile = htmlFile;
     }
 
@@ -29,7 +29,7 @@ public class ReverseModule extends HTTPModule {
             int fileLength = (int) getHtmlFile().length();
             byte[] requestedFile = readFileData(getHtmlFile(), fileLength);
 
-            response.setContentType(getContentType(input));
+            response.setContentType(request.getContentType());
             response.setContentLength(fileLength);
             response.setData(requestedFile);
         } else {
@@ -37,7 +37,7 @@ public class ReverseModule extends HTTPModule {
             int fileLength = (int) file.length();
             byte[] requestedFile = readFileData(file, fileLength);
 
-            response.setContentType(getContentType(input));
+            response.setContentType(request.getContentType());
             response.setContentLength(fileLength);
             response.setData(requestedFile);
         }
