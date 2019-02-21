@@ -44,6 +44,11 @@ public class ReverseModule extends HTTPModule {
         return response;
     }
 
+    public ResponseObject head(RequestObject request, ResponseObject response) {
+
+        return super.head(request, response);
+    }
+
     private void createNewHtml(String param) {
 
         StringBuilder html = new StringBuilder();
@@ -101,14 +106,7 @@ public class ReverseModule extends HTTPModule {
 
     public byte [] readFileData(File file, int fileLength){
 
-        byte [] data = new byte [fileLength];
-        try (FileInputStream fileIn = new FileInputStream(file)) {
-            fileIn.read(data);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return data;
+        return getBytes(file, fileLength);
     }
 
     public String getContentType(String request){

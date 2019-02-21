@@ -27,6 +27,8 @@ public class Main {
         HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);
         HTTPServer.getFunctions().put("calculator", calculator);
+        HTTPModule personAge = new PersonAge();
+        HTTPServer.getFunctions().put("personage", personAge);
 
         //URLClassLoader ucl = createClassLoader(args[0]);
 

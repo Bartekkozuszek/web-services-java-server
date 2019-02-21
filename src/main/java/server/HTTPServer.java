@@ -157,7 +157,12 @@ public class HTTPServer implements Runnable{
             requestData.put("requestString", requestString);
             params = parseParams(requestString);
             requestData.put("request", requestString);
-            int index = requestString.indexOf("/", 2);
+            if(requestString.contains("?")){
+                index = requestString.indexOf("?");
+            }
+            else {
+                index = requestString.indexOf("/", 2);
+            }
             System.out.println("requeststring: " + requestString) ;
             String destination = requestString.substring(1, index);
             System.out.println("destination: " + destination);

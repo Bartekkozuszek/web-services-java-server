@@ -3,9 +3,6 @@ package server;
 import api.HTTPModule;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 //TODO make base fileobject that can have extend file and files? includes the same WEB_ROOT and so on..
 //TODO maybe a base HTTPModule object with readfileData() and other methods, all modules might want to convert a file to byte[]
@@ -45,12 +42,7 @@ public class FilesModule extends HTTPModule {
     @Override
     public ResponseObject head(RequestObject request, ResponseObject response) {
 
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(getResponse.getContentLength());
-        response.setData(null);
-
-        return response;
+        return super.head(request, response);
     }
 
     @Override
@@ -75,27 +67,13 @@ public class FilesModule extends HTTPModule {
     @Override
     public byte [] readFileData(File file, int fileLength){
 
-        byte [] data = new byte [fileLength];
-        try (FileInputStream fileIn = new FileInputStream(file)) {
-            fileIn.read(data);
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return data;
+        return getBytes(file, fileLength);
     }
 
 
 
     public String getContentType(String request){
 
-        if(request.endsWith(".htm") || request.endsWith(".html")){
-
-            return "text/html";
-        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
-            return "image/jpg";
-        }else{
-            return "text/plain";
-        }
+        return super.getContentType(request);
     }
 }
