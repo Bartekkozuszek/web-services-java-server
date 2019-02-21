@@ -174,12 +174,12 @@ public class HTTPServer implements Runnable{
                 else if (!line.contains(": ") && !line.equals("")) {
                     requestData.put("body", line);
                 }
-                else if(line.equals("")){
-                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
-                    rawRequest.read(body);
-                    String bodyString = new String(body);
-                    System.out.println(bodyString);
-                }
+//                else if(line.equals("")){
+//                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
+//                    rawRequest.read(body);
+//                    String bodyString = new String(body);
+//                    System.out.println(bodyString);
+//                }
             }
             System.out.println("request: " + requestData.get("request"));
             System.out.println("requestData:-----------------------");

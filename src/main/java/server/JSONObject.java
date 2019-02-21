@@ -34,8 +34,10 @@ public class JSONObject {
             for (JsonValue jv: jArray) {
                 if(((JsonObject)jv).keySet().contains("name")){
                     String name = ((JsonObject)jv).getString("name");
+                    System.out.println(name);
                 } else if(((JsonObject)jv).keySet().contains("age")){
-                    String name = ((JsonObject)jv).getString("age");
+                    String age = ((JsonObject)jv).getString("age");
+                    System.out.println(age);
                 }
             }
             setJsonFile(jObject);
@@ -46,7 +48,7 @@ public class JSONObject {
     public void writeToJson(JsonObject obj){
         Writer writer = new PrintWriter((Writer) obj);
         JsonWriter jwriter = Json.createWriter(writer);
-        JsonObject jObject = Json.createObjectBuilder().add("", "").build();
+        JsonObject jObject = Json.createObjectBuilder().add("name", "age").build();
         jwriter.writeObject(jObject);
         jwriter.close();
     }

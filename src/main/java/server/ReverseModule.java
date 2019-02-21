@@ -8,12 +8,44 @@ public class ReverseModule extends HTTPModule {
 
     private static final File WEB_ROOT = new File(".");
 
+    public File getHtmlFile() {
+        return htmlFile;
+    }
+
+    public void setHtmlFile(File htmlFile) {
+        this.htmlFile = htmlFile;
+    }
+
+    private File htmlFile;
+
     @Override
     public ResponseObject get(RequestObject request, ResponseObject response){
 
         String input = request.getRequestData().get("requestString");
         System.out.println(input);
-        String param = input.substring(input.lastIndexOf("=") + 1);
+        if(input.contains("?") && input.contains("=")) {
+            String param = input.substring(input.lastIndexOf("=") + 1);
+            createNewHtml(param);
+            int fileLength = (int) getHtmlFile().length();
+            byte[] requestedFile = readFileData(getHtmlFile(), fileLength);
+
+            response.setContentType(getContentType(input));
+            response.setContentLength(fileLength);
+            response.setData(requestedFile);
+        } else {
+            File file = new File(WEB_ROOT, "reverse.html");
+            int fileLength = (int) file.length();
+            byte[] requestedFile = readFileData(file, fileLength);
+
+            response.setContentType(getContentType(input));
+            response.setContentLength(fileLength);
+            response.setData(requestedFile);
+        }
+        return response;
+    }
+
+    private void createNewHtml(String param) {
+
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html><head><title>Reverse Writing </title></head>\n")
                 .append("<body>")
@@ -21,24 +53,19 @@ public class ReverseModule extends HTTPModule {
                 .append(" <bdo dir=\"rtl\">").append(param).append("</bdo> \n")
                 .append("</body></html>");
         System.out.println("Creating html file");
-        File htmlFile = new File(WEB_ROOT, "reverse.html");
+        File htmlFileResult = new File(WEB_ROOT, "reverseResult.html");
         try {
-            OutputStream out = new FileOutputStream(htmlFile.getAbsoluteFile());
+            OutputStream out = new FileOutputStream(htmlFileResult.getAbsoluteFile());
             Writer writer = new OutputStreamWriter(out);
             writer.write(html.toString());
             writer.close();
             System.out.println("html file created successfully");
-        }catch (IOException e){
+            setHtmlFile(htmlFileResult);
+        } catch (IOException e) {
             e.getMessage();
         }
-        int fileLength = (int)htmlFile.length();
-        byte [] requestedFile = readFileData(htmlFile, fileLength);
-
-        response.setContentType(getContentType(input));
-        response.setContentLength(fileLength);
-        response.setData(requestedFile);
-        return response;
     }
+
 
     private void WriteToFile(String content) {
 
