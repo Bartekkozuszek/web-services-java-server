@@ -91,19 +91,6 @@ public class ReverseModule extends HTTPModule {
     }
 
 
-    private void WriteToFile(String content) {
-
-//        try {
-//            OutputStream out = new FileOutputStream(file.getAbsoluteFile());
-//            Writer writer = new OutputStreamWriter(out);
-//            writer.write(content);
-//            writer.close();
-//            System.out.println("html file created successfully");
-//        }catch (IOException e){
-//            e.getMessage();
-//        }
-    }
-
     public byte [] readFileData(File file, int fileLength){
 
         return getBytes(file, fileLength);
