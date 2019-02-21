@@ -148,7 +148,12 @@ public class HTTPServer implements Runnable{
             requestData.put("requestString", requestString);
             params = parseParams(requestString);
             requestData.put("request", requestString);
-            int index = requestString.indexOf("/", 2);
+            if(requestString.contains("?")){
+                index = requestString.indexOf("?");
+            }
+            else {
+                index = requestString.indexOf("/", 2);
+            }
             System.out.println("requeststring: " + requestString) ;
             String destination = requestString.substring(1, index);
             System.out.println("destination: " + destination);
@@ -166,7 +171,7 @@ public class HTTPServer implements Runnable{
                 else if (!line.contains(": ") && !line.equals("")) {
                     requestData.put("body", line);
                 }
-                else if(line.equals("")){
+                else if(line.equals("") && requestData.containsKey("Content-Length")){
                     char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
                     rawRequest.read(body);
                     String bodyString = new String(body);

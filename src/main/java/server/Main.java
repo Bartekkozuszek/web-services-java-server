@@ -21,10 +21,12 @@ public class Main {
         //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
         //HTTPServer.getFunctions().add(new Calculator());
 
-        HTTPModule files = new FilesModule();
+        //HTTPModule files = new FilesModule();
         HTTPModule calculator = new Calculator2();
-        HTTPServer.getFunctions().put("files", files);
+        //HTTPServer.getFunctions().put("files", files);
         HTTPServer.getFunctions().put("calculator", calculator);
+        HTTPModule personAge = new PersonAge();
+        HTTPServer.getFunctions().put("personage", personAge);
 
         //URLClassLoader ucl = createClassLoader(args[0]);
 
