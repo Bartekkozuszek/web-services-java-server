@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.URLDecoder;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HTTPServer implements Runnable{
 
@@ -174,12 +175,13 @@ public class HTTPServer implements Runnable{
                 else if (!line.contains(": ") && !line.equals("")) {
                     requestData.put("body", line);
                 }
-//                else if(line.equals("")){
+               /* else if(line.equals("")){
+                    String bodyString = rawRequest.lines().collect(Collectors.joining());
 //                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
 //                    rawRequest.read(body);
-//                    String bodyString = new String(body);
-//                    System.out.println(bodyString);
-//                }
+//                     = new String(body);
+                    System.out.println(bodyString);
+                }*/
             }
             System.out.println("request: " + requestData.get("request"));
             System.out.println("requestData:-----------------------");

@@ -66,6 +66,25 @@ public class ReverseModule extends HTTPModule {
         }
     }
 
+    @Override
+    public ResponseObject post(RequestObject request, ResponseObject response) {
+        ResponseObject getResponse = get(request, response);
+        response.setContentType(request.getContentType());
+        response.setContentLength(getResponse.getContentLength());
+        response.setData(getResponse.getData());
+//        if (request.getBody()=0) {
+//            return response;
+//        } else{
+//            JSONObject j = new JSONObject(request.getBody());
+//            try {
+//                j.writeToJson(j.readFromJson());
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        return response;
+    }
+
 
     private void WriteToFile(String content) {
 
