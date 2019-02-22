@@ -1,6 +1,8 @@
 
 package server;
 
+import com.google.gson.Gson;
+
 import javax.json.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,9 +26,14 @@ public class JSONObject {
         this.requestBody = requestBody;
     }
 
+    public JSONObject() {
+
+    }
+
     public JsonObject readFromJson() throws FileNotFoundException {
+
         JsonReader jReader = null;
-            jReader = Json.createReader(new FileReader(requestBody));
+            jReader = Json.createReader(new FileReader((requestBody)));
             JsonStructure jStructure = jReader.read();
             JsonObject jObject = (JsonObject) jStructure; //not to be confused with the class JSONObject
             JsonArray jArray = jObject.getJsonArray("body");
@@ -44,8 +51,16 @@ public class JSONObject {
 
     }
 
-    public void writeToJson(JsonObject obj){
-        Writer writer = new PrintWriter((Writer) obj);
+    public void writeToJson(String obj){
+        Writer writer = null;
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+
+        try {
+            writer = new PrintWriter(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         JsonWriter jwriter = Json.createWriter(writer);
         JsonObject jObject = Json.createObjectBuilder().add("name", "age").build();
         jwriter.writeObject(jObject);

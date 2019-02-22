@@ -185,6 +185,7 @@ public class HTTPServer implements Runnable{
                     rawRequest.read(body);
                     String bodyString = new String(body);
                     System.out.println(bodyString);
+                    requestData.put("body", bodyString);
                 }
             }
             System.out.println("request: " + requestData.get("request"));

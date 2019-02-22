@@ -1,13 +1,17 @@
 package api;
 
+import com.google.gson.Gson;
 import server.RequestObject;
 import server.ResponseObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonWriter;
+import java.io.*;
 
 public abstract class HTTPModule implements HTTPMethods {
+
+    private static final String WEB_ROOT = ".";
 
     private String notSupported(){
         StringBuilder html = new StringBuilder();
@@ -43,7 +47,24 @@ public abstract class HTTPModule implements HTTPMethods {
         return response;
     }
     public ResponseObject post(RequestObject request, ResponseObject response){
-        return setResponse(response);
+
+        File file = new File(WEB_ROOT, "jsonInfo.html");
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+        Writer writer = new OutputStreamWriter(out);
+        writer.write(request.getRequestData().get("body"));
+        writer.close();
+        int fileLength = (int) file.length();
+        byte[] requestedFile = readFileData(file, fileLength);
+        ResponseObject getResponse = get(request, response);
+        response.setContentType(getResponse.getContentType());
+        response.setContentLength(fileLength);
+        response.setData(requestedFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
     public ResponseObject put(RequestObject request, ResponseObject response){
         return setResponse(response);
@@ -55,7 +76,6 @@ public abstract class HTTPModule implements HTTPMethods {
     public String getContentType(String request){
 
         if(request.endsWith(".htm") || request.endsWith(".html")){
-
             return "text/html";
         }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
             return "image/jpg";
@@ -64,7 +84,10 @@ public abstract class HTTPModule implements HTTPMethods {
         }
         else if (request.endsWith(".png")){
             return "image/png";
-        }else{
+        } else if(request.endsWith(".pdf")){
+            return "application/pdf";
+        }
+        else{
             return "text/plain";
         }
     }
@@ -83,6 +106,23 @@ public abstract class HTTPModule implements HTTPMethods {
             System.out.println(e.getMessage());
         }
         return data;
+    }
+
+
+    public void writeToJson(String obj){
+        Writer writer = null;
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+
+        try {
+            writer = new PrintWriter(json);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        JsonWriter jwriter = Json.createWriter(writer);
+        JsonObject jObject = Json.createObjectBuilder().add("name", "age").build();
+        jwriter.writeObject(jObject);
+        jwriter.close();
     }
 
 }

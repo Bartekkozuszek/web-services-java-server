@@ -15,7 +15,8 @@ public class PersonAge extends HTTPModule {
         html.append("<!DOCTYPE html> <html>")
                 .append("<head><title>Person age</title></head>")
                 .append("<body>")
-                .append("<h2>Hello " + name + ", you are " + (Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(p.get("year"))) + " years old this year!</h2>")
+                .append("<h2>Hello " + name + ", you are " + (Calendar.getInstance().get(Calendar.YEAR) -
+                        Integer.parseInt(p.get("year"))) + " years old this year!</h2>")
                 .append("</body>")
                 .append("</html>");
         System.out.println("Creating html file");
