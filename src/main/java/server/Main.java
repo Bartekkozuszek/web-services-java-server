@@ -21,6 +21,8 @@ public class Main {
         //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
         //HTTPServer.getFunctions().add(new Calculator());
 
+
+        //Moduler läggs in här
         HTTPModule files = new FilesModule();
         HTTPModule calculator = new Calculator2();
         HTTPModule reverse = new ReverseModule();
@@ -29,6 +31,9 @@ public class Main {
         HTTPServer.getFunctions().put("calculator", calculator);
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
+
+
+
 
         //URLClassLoader ucl = createClassLoader(args[0]);
 
@@ -60,6 +65,7 @@ public class Main {
         }
     }
 
+    //Förbredd för service loader
     private static URLClassLoader createClassLoader(String fileLocation){
         File loc = new File(fileLocation);// hur sätts filelocation via args, ./lib?
 
