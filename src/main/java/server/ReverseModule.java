@@ -53,9 +53,137 @@ public class ReverseModule extends HTTPModule {
 
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html><head><title>Reverse Writing </title></head>\n")
-                .append("<body>")
-                .append("<h3>Here is the text you wrote from right to left:</h3>")
-                .append(" <bdo dir=\"rtl\">").append(param).append("</bdo> \n")
+                .append("<body bgcolor=\"#E6E6FA\">")
+                .append("<h1 align=\"center\"><font color=\"blue\">Reverse Word!</h1>")
+                .append("<h2 align=\"center\">Here is the text you wrote from right to left:</h3>")
+                .append("<bdo dir=\"rtl\"><font color=\"red\" size=\"6\">").append(param).append("</bdo> \n")
+                .append("<p></p>")
+                .append("<p></p>")
+                .append("<style>\n" +
+                        "img {\n" +
+                        "  display: block;\n" +
+                        "  margin-left: auto;\n" +
+                        "  margin-right: auto;\n" +
+                        "}\n" +
+                        "* {box-sizing: border-box;}\n" +
+                                "body {font-family: Verdana, sans-serif;}\n" +
+                                ".mySlides {display: none;}\n" +
+                                "img {vertical-align: middle;}\n" +
+                                "\n" +
+                                "/* Slideshow container */\n" +
+                                ".slideshow-container {\n" +
+                                "  max-width: 1000px;\n" +
+                                "  position: relative;\n" +
+                                "  margin: auto;\n" +
+                                "}\n" +
+                                "\n" +
+                                "/* Caption text */\n" +
+                                ".text {\n" +
+                                "  color: #f2f2f2;\n" +
+                                "  font-size: 15px;\n" +
+                                "  padding: 8px 12px;\n" +
+                                "  position: absolute;\n" +
+                                "  bottom: 8px;\n" +
+                                "  width: 100%;\n" +
+                                "  text-align: center;\n" +
+                                "}\n" +
+                                "\n" +
+                                "/* Number text (1/3 etc) */\n" +
+                                ".numbertext {\n" +
+                                "  color: #f2f2f2;\n" +
+                                "  font-size: 12px;\n" +
+                                "  padding: 8px 12px;\n" +
+                                "  position: absolute;\n" +
+                                "  top: 0;\n" +
+                                "}\n" +
+                                "\n" +
+                                "/* The dots/bullets/indicators */\n" +
+                                ".dot {\n" +
+                                "  height: 15px;\n" +
+                                "  width: 15px;\n" +
+                                "  margin: 0 2px;\n" +
+                                "  background-color: #bbb;\n" +
+                                "  border-radius: 50%;\n" +
+                                "  display: inline-block;\n" +
+                                "  transition: background-color 0.6s ease;\n" +
+                                "}\n" +
+                                "\n" +
+                                ".active {\n" +
+                                "  background-color: #717171;\n" +
+                                "}\n" +
+                                "\n" +
+                                "/* Fading animation */\n" +
+                                ".fade {\n" +
+                                "  -webkit-animation-name: fade;\n" +
+                                "  -webkit-animation-duration: 1.5s;\n" +
+                                "  animation-name: fade;\n" +
+                                "  animation-duration: 1.5s;\n" +
+                                "}\n" +
+                                "\n" +
+                                "@-webkit-keyframes fade {\n" +
+                                "  from {opacity: .4} \n" +
+                                "  to {opacity: 1}\n" +
+                                "}\n" +
+                                "\n" +
+                                "@keyframes fade {\n" +
+                                "  from {opacity: .4} \n" +
+                                "  to {opacity: 1}\n" +
+                                "}\n" +
+                                "\n" +
+                                "/* On smaller screens, decrease text size */\n" +
+                                "@media only screen and (max-width: 300px) {\n" +
+                                "  .text {font-size: 11px}\n" +
+                                "}"+
+                        "</style>")
+                .append("<div class=\"slideshow-container\">\n" +
+                        "\n" +
+                        "<div class=\"mySlides fade\">\n" +
+                        "  <div class=\"numbertext\"></div>\n" +
+                        "  <img src=\"/files/Images/l1.jpg\" style=\"width:100%\" height=\"400\">\n" +
+                        "  <div class=\"text\"></div>\n" +
+                        "</div>\n" +
+                        "\n" +
+                        "<div class=\"mySlides fade\">\n" +
+                        "  <div class=\"numbertext\"></div>\n" +
+                        "  <img src=\"/files/Images/l2.jpg\" style=\"width:100%\" height=\"400\">\n" +
+                        "  <div class=\"text\"></div>\n" +
+                        "</div>\n" +
+                        "\n" +
+                        "<div class=\"mySlides fade\">\n" +
+                        "  <div class=\"numbertext\"></div>\n" +
+                        "  <img src=\"/files/Images/l3.jpg\" style=\"width:100%\" height=\"400\">\n" +
+                        "  <div class=\"text\"></div>\n" +
+                        "</div>\n" +
+                        "\n" +
+                        "</div>\n" +
+                        "<br>\n" +
+                        "\n" +
+                        "<div style=\"text-align:center\">\n" +
+                        "  <span class=\"dot\"></span> \n" +
+                        "  <span class=\"dot\"></span> \n" +
+                        "  <span class=\"dot\"></span> \n" +
+                        "</div>")
+                .append("<script>\n" +
+                        "var slideIndex = 0;\n" +
+                        "showSlides();\n" +
+                        "\n" +
+                        "function showSlides() {\n" +
+                        "  var i;\n" +
+                        "  var slides = document.getElementsByClassName(\"mySlides\");\n" +
+                        "  var dots = document.getElementsByClassName(\"dot\");\n" +
+                        "  for (i = 0; i < slides.length; i++) {\n" +
+                        "    slides[i].style.display = \"none\";  \n" +
+                        "  }\n" +
+                        "  slideIndex++;\n" +
+                        "  if (slideIndex > slides.length) {slideIndex = 1}    \n" +
+                        "  for (i = 0; i < dots.length; i++) {\n" +
+                        "    dots[i].className = dots[i].className.replace(\" active\", \"\");\n" +
+                        "  }\n" +
+                        "  slides[slideIndex-1].style.display = \"block\";  \n" +
+                        "  dots[slideIndex-1].className += \" active\";\n" +
+                        "  setTimeout(showSlides, 5000); // Change image every 2 seconds\n" +
+                        "}\n" +
+                        "</script>")
                 .append("</body></html>");
         System.out.println("Creating html file");
         File htmlFileResult = new File(WEB_ROOT, "reverseResult.html");
