@@ -49,7 +49,7 @@ public abstract class HTTPModule implements HTTPMethods {
         return setResponse(response);
     }
 
-    private String getContentType(String request){
+    public String getContentType(String request){
 
         if(request.endsWith(".htm") || request.endsWith(".html")){
 
@@ -63,7 +63,7 @@ public abstract class HTTPModule implements HTTPMethods {
         }
     }
 
-    private byte [] readFileData(File file, int fileLength){
+    public byte [] readFileData(File file, int fileLength){
 
         byte [] data = new byte [fileLength];
         try (FileInputStream fileIn = new FileInputStream(file)) {
