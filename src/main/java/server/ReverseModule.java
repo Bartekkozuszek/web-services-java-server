@@ -52,10 +52,10 @@ public class ReverseModule extends HTTPModule {
     private void createNewHtml(String param) {
 
         StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html>\n<html><head><title>Reverse Writing </title></head>\n")
+        html.append("<!DOCTYPE html>\n<html><head><meta charset=\"utf-8\"><title>Reverse Writing </title></head>\n")
                 .append("<body bgcolor=\"#E6E6FA\">")
-                .append("<h1 align=\"center\"><font color=\"blue\">Reverse Word!</h1>")
-                .append("<h2 align=\"center\">Here is the text you wrote from right to left:</h3>")
+                .append("<h1><font color=\"blue\">Reverse Word!</h1>")
+                .append("<h2>Here is the text you wrote from right to left:</h3>")
                 .append("<bdo dir=\"rtl\"><font color=\"red\" size=\"6\">").append(param).append("</bdo> \n")
                 .append("<p></p>")
                 .append("<p></p>")
@@ -66,7 +66,7 @@ public class ReverseModule extends HTTPModule {
                         "  margin-right: auto;\n" +
                         "}\n" +
                         "* {box-sizing: border-box;}\n" +
-                                "body {font-family: Verdana, sans-serif;}\n" +
+                                "body {font-family: Verdana, sans-serif; text-align:center;}\n" +
                                 ".mySlides {display: none;}\n" +
                                 "img {vertical-align: middle;}\n" +
                                 "\n" +
