@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+</head>
+<body>
+	<div class="container">
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Welcome to Mr Johanssons</p>
+	      <p class="content-subtitle">Scroll down to see the capabilities of our web server</p>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Meatballs</p>
+	      <a href="http://localhost:8081/files/recipies/kottbullarrecept.html" class="content-subtitle">View our delicious meatball recipe >></a>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Calculator</p>
+	      <p class="content-subtitle">In the URL, add ?v1=<span class="colored">firstVariable</span>&v2=<span class="colored">secondVariable</span>&operator=<span class="colored">operator</span> e.g. ?v1=25&v2=58&operator=*</p>
+	      <p>Go to calculator >></p>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Know your age</p>
+	      <p class="content-subtitle">Nullam tristique urna sed tellus ornare congue. Etiam vitae erat at nibh aliquam dapibus.</p>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Reverse</p>
+	      <p class="content-subtitle">Enter a word and get it back in reverse</p>
+	      <a href="http://localhost:8081/reverse/" class="content-subtitle">Go to reverse >></a>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">JSON information</p>
+	      <p class="content-subtitle">Nullam tristique urna sed tellus ornare congue. Etiam vitae erat at nibh aliquam dapibus.</p>
+	    </div>
+	  </section>
+	  <section class="background">
+	    <div class="content-wrapper">
+	      <p class="content-title">Contributers</p>
+	      <p class="content-subtitle">Carl, Bartek, Martin & Pätrås</p>
+	    </div>
+	  </section>
+	</div>
+<style>
+	@import url(https://fonts.googleapis.com/css?family=Montserrat);
+html,
+body {
+  overflow: hidden;
+}
+
+.background {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  overflow: hidden;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  height: 130vh;
+  position: fixed;
+  width: 100%;
+  -webkit-transform: translateY(30vh);
+          transform: translateY(30vh);
+  transition: all 1.2s cubic-bezier(0.22, 0.44, 0, 1);
+}
+.background:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.background:first-child {
+  background-image: url(https://i.postimg.cc/kXq9Qmnj/bgd1.jpg);
+  -webkit-transform: translateY(-15vh);
+          transform: translateY(-15vh);
+}
+.background:first-child .content-wrapper {
+  -webkit-transform: translateY(15vh);
+          transform: translateY(15vh);
+}
+.background:nth-child(2) {
+  background-image: url(/files/images/meatballs.jpg);
+}
+.background:nth-child(3) {
+  background-image: url(/files/images/calculator.png);
+}
+.background:nth-child(4) {
+  background-image: url(/files/images/knowage.jpg);
+}
+.background:nth-child(5) {
+  background-image: url(/files/images/reversewords.jpg);
+}
+.background:nth-child(6) {
+  background-image: url(/files/images/json.jpg);
+}
+.background:nth-child(7) {
+  background-image: url(/files/images/mrjohansson.jpg);
+}
+
+/* Set stacking context of slides */
+.background:nth-child(1) {
+  z-index: 7;
+}
+
+.background:nth-child(2) {
+  z-index: 6;
+}
+
+.background:nth-child(3) {
+  z-index: 5;
+}
+
+.background:nth-child(4) {
+  z-index: 4;
+}
+
+.background:nth-child(5) {
+  z-index: 3;
+}
+
+.background:nth-child(6) {
+  z-index: 2;
+}
+
+.background:nth-child(7) {
+  z-index: 1;
+}
+
+
+.content-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-flow: column nowrap;
+  color: #fff;
+  font-family: Montserrat;
+  text-transform: uppercase;
+  -webkit-transform: translateY(40vh);
+          transform: translateY(40vh);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  transition: all 1.7s cubic-bezier(0.22, 0.44, 0, 1);
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+a:hover {
+  color:#79d8ba;
+}
+
+.content-title {
+  font-size: 12vh;
+  line-height: 1.4;
+}
+
+.background.up-scroll {
+  -webkit-transform: translate3d(0, -15vh, 0);
+          transform: translate3d(0, -15vh, 0);
+}
+.background.up-scroll .content-wrapper {
+  -webkit-transform: translateY(15vh);
+          transform: translateY(15vh);
+}
+.background.up-scroll + .background {
+  -webkit-transform: translate3d(0, 30vh, 0);
+          transform: translate3d(0, 30vh, 0);
+}
+.background.up-scroll + .background .content-wrapper {
+  -webkit-transform: translateY(30vh);
+          transform: translateY(30vh);
+}
+
+.background.down-scroll {
+  -webkit-transform: translate3d(0, -130vh, 0);
+          transform: translate3d(0, -130vh, 0);
+}
+.background.down-scroll .content-wrapper {
+  -webkit-transform: translateY(40vh);
+          transform: translateY(40vh);
+}
+.background.down-scroll + .background:not(.down-scroll) {
+  -webkit-transform: translate3d(0, -15vh, 0);
+          transform: translate3d(0, -15vh, 0);
+}
+.background.down-scroll + .background:not(.down-scroll) .content-wrapper {
+  -webkit-transform: translateY(15vh);
+          transform: translateY(15vh);
+}
+
+.colored {
+  color:#58ef73;
+}
+</style>
+<script type="text/javascript">
+// ------------- VARIABLES ------------- //
+var ticking = false;
+var isFirefox = (/Firefox/i.test(navigator.userAgent));
+var isIe = (/MSIE/i.test(navigator.userAgent)) || (/Trident.*rv\:11\./i.test(navigator.userAgent));
+var scrollSensitivitySetting = 30; //Increase/decrease this number to change sensitivity to trackpad gestures (up = less sensitive; down = more sensitive) 
+var slideDurationSetting = 600; //Amount of time for which slide is "locked"
+var currentSlideNumber = 0;
+var totalSlideNumber = 7; //$(".background").length
+
+// ------------- DETERMINE DELTA/SCROLL DIRECTION ------------- //
+function parallaxScroll(evt) {
+  if (isFirefox) {
+    //Set delta for Firefox
+    delta = evt.detail * (-120);
+  } else if (isIe) {
+    //Set delta for IE
+    delta = -evt.deltaY;
+  } else {
+    //Set delta for all other browsers
+    delta = evt.wheelDelta;
+  }
+
+  if (ticking != true) {
+    if (delta <= -scrollSensitivitySetting) {
+      //Down scroll
+      ticking = true;
+      if (currentSlideNumber !== totalSlideNumber - 1) {
+        currentSlideNumber++;
+        nextItem();
+      }
+      slideDurationTimeout(slideDurationSetting);
+    }
+    if (delta >= scrollSensitivitySetting) {
+      //Up scroll
+      ticking = true;
+      if (currentSlideNumber !== 0) {
+        currentSlideNumber--;
+      }
+      previousItem();
+      slideDurationTimeout(slideDurationSetting);
+    }
+  }
+}
+
+// ------------- SET TIMEOUT TO TEMPORARILY "LOCK" SLIDES ------------- //
+function slideDurationTimeout(slideDuration) {
+  setTimeout(function() {
+    ticking = false;
+  }, slideDuration);
+}
+
+// ------------- ADD EVENT LISTENER ------------- //
+var mousewheelEvent = isFirefox ? "DOMMouseScroll" : "wheel";
+window.addEventListener(mousewheelEvent, _.throttle(parallaxScroll, 60), false);
+
+// ------------- SLIDE MOTION ------------- //
+function nextItem() {
+  var $previousSlide = $(".background").eq(currentSlideNumber - 1);
+  $previousSlide.removeClass("up-scroll").addClass("down-scroll");
+}
+
+function previousItem() {
+  var $currentSlide = $(".background").eq(currentSlideNumber);
+  $currentSlide.removeClass("down-scroll").addClass("up-scroll");
+}
+</script>
+</body>
+</html>

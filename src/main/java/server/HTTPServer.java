@@ -80,20 +80,20 @@ public class HTTPServer implements Runnable{
     private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
-        request = URLDecoder.decode(request, "UTF-8");
+        //     request = URLDecoder.decode(request, "UTF-8");
 
 
-        if(request.contains("?") && request.contains("=")){
-            request = request.substring(request.indexOf("?") + 1);
-            String [] tempParams = request.split("&");
-            for (String item: tempParams) {
-                String [] tempParam = item.split("=");
-                params.put(tempParam[0], tempParam[1]);
-            }
-            params.forEach((a,b)-> System.out.println(a + " : " + b));
-            return params;
+        //      if(request.contains("?") && request.contains("=")){
+        //          request = request.substring(request.indexOf("?") + 1);
+        String[] tempParams = request.split("&");
+        for (String item : tempParams) {
+            String[] tempParam = item.split("=");
+            params.put(tempParam[0], tempParam[1]);
         }
-        return null;
+        params.forEach((a, b) -> System.out.println(a + " : " + b));
+        return params;
+
+        //    return null;
     }
 
 
@@ -153,20 +153,42 @@ public class HTTPServer implements Runnable{
             StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
             requestData.put("method", parse.nextToken());
             String requestString = parse.nextToken();
-            requestData.put("requestString", requestString);
-            params = parseParams(requestString);
-            requestData.put("request", requestString);
+            requestData.put("requestString", requestString); //Original browser request
+            
             if(requestString.contains("?")){
                 index = requestString.indexOf("?");
+                params = parseParams(requestString.substring(index+1));
+                requestString = requestString.substring(0, index); //Without ?+parameters extension
+                
+            }
+            
+            
+            requestData.put("request", requestString); //save Without ?+parameters extension
+            
+            requestString= requestString.substring(1);           
+            
+            index = requestString.indexOf("/");
+            if(index>0){               
+            	requestData.put("destination", requestString.substring(0, index));
             }
             else {
-                index = requestString.indexOf("/", 2);
+            	requestData.put("destination", requestString);
             }
-            System.out.println("requeststring: " + requestString) ;
-            String destination = requestString.substring(1, index);
-            System.out.println("destination: " + destination);
-            requestData.put("destination", destination);
+            
+            if(requestData.get("request").equals("/")) {
+            	requestData.put("destination", "files");
+            	requestData.put("request", "/files/index.html");
+            	requestData.put("requestString", "/files/index.html");
+            	
+            	
+            }
+            
+            System.out.println("requeststring: " + requestData.get("requestString")) ;
+            System.out.println("request: " + requestData.get("request")) ;
+            System.out.println("destination: " + requestData.get("destination")) ;
+            
             requestData.put("version", parse.nextToken());
+            
             String line;
 
             while(rawRequest.ready()) {
