@@ -69,6 +69,8 @@ public class Calculator2 extends HTTPModule {
                 "\tcolor: #c41c4f;\n" +
                 "}");
         htmlBuilder.append("</style>");
+        htmlBuilder.append("</head>");
+        htmlBuilder.append("<body>");
         htmlBuilder.append("<div class=\"container\">");
         htmlBuilder.append("<section class=\"background\">");
         htmlBuilder.append("<div class=\"content-wrapper\">");
