@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6ea27f76-3674-406d-b082-c7951fd81d66" name="Default Changelist" comment="Worked on POST method so it returns the right string">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/people" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/jsonInfo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/jsonInfo.html" beforeDir="false" afterPath="$PROJECT_DIR$/jsonInfo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kottbullar.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mrjohansson.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mrjohansson.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reverse.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/reverse.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reverseResult.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/reverseResult.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/api/HTTPModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/api/HTTPModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/api/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/api/Url.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/FilesModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/FilesModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/HTTPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/HTTPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/PersonAge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/PersonAge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/RequestObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/RequestObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/ReverseModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/ReverseModule.java" afterDir="false" />
+    <list default="true" id="6ea27f76-3674-406d-b082-c7951fd81d66" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/files/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/files/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jsonInfo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/people" beforeDir="false" afterPath="$PROJECT_DIR$/people" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/jsonInfo.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/jsonInfo.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,19 +59,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/server/FilesModule.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/server/HTTPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+            <state relative-caret-position="-532">
+              <caret line="14" column="40" lean-forward="true" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4670#4686#0" expanded="true" />
@@ -97,10 +71,19 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/files/display.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/api/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
+            <state relative-caret-position="782">
               <caret line="51" selection-start-line="51" selection-end-line="51" />
             </state>
           </provider>
@@ -120,13 +103,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/server/Main.java">
+        <entry file="file://$PROJECT_DIR$/files/form.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/files/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="403">
+              <caret line="210" column="72" selection-start-line="210" selection-start-column="72" selection-end-line="210" selection-end-column="72" />
             </state>
           </provider>
         </entry>
@@ -140,20 +125,7 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#1091#1092#0" expanded="true" />
                 <element signature="e#1135#1136#0" expanded="true" />
-                <element signature="e#2492#2493#0" expanded="true" />
-                <element signature="e#2536#2537#0" expanded="true" />
-                <element signature="e#2618#2619#0" expanded="true" />
-                <element signature="e#2662#2663#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/server/PersonAge.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
-              <caret line="88" selection-start-line="88" selection-end-line="88" />
             </state>
           </provider>
         </entry>
@@ -218,7 +190,6 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/server/HTTPHead.java" />
         <option value="$PROJECT_DIR$/reverse.html" />
-        <option value="$PROJECT_DIR$/files/index.html" />
         <option value="$PROJECT_DIR$/src/main/java/server/Calculator2.java" />
         <option value="$PROJECT_DIR$/src/main/java/api/Module.java" />
         <option value="$PROJECT_DIR$/src/main/java/api/Url.java" />
@@ -230,6 +201,7 @@
         <option value="$PROJECT_DIR$/src/main/java/server/PersonAge.java" />
         <option value="$PROJECT_DIR$/src/main/java/server/HTTPServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/api/HTTPModule.java" />
+        <option value="$PROJECT_DIR$/files/index.html" />
       </list>
     </option>
   </component>
@@ -287,6 +259,16 @@
             <path>
               <item name="mrjohansson" type="b2602c69:ProjectViewProjectNode" />
               <item name="web-services-java-server" type="462c0819:PsiDirectoryNode" />
+              <item name="files" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mrjohansson" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-services-java-server" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mrjohansson" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-services-java-server" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -332,7 +314,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551035780915" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551037242630" />
     <property name="database.console.LAST_STATE" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
@@ -480,7 +462,7 @@
       <workItem from="1550681233278" duration="112000" />
       <workItem from="1550682292549" duration="22000" />
       <workItem from="1550767074100" duration="53465000" />
-      <workItem from="1551025906955" duration="5820000" />
+      <workItem from="1551025906955" duration="7344000" />
     </task>
     <task id="LOCAL-00001" summary="added form.html, display.html and updated kottbullarrecept.html">
       <created>1550836833180</created>
@@ -517,11 +499,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550947709860</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Worked on POST method so it returns the right string">
+      <created>1551035861250</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1551035861250</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61333000" />
+    <option name="totallyTimeSpent" value="62857000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -534,18 +523,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="1" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Capture Tool" order="3" />
       <window_info id="UI Designer" order="4" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.20121029" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.20121029" />
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Console" order="0" weight="0.3289689" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32733223" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.60883796" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3995258" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
@@ -554,7 +544,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3286119" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.3289689" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3283936" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32733223" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -589,7 +579,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Worked on POST method so it returns the right string" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/se/iths/carl/api/HTTPMethods.java" />
     <entry file="file://$PROJECT_DIR$/k2.jpg" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
@@ -598,16 +587,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_192/src.zip!/java/io/BufferedReader.java" />
-    <entry file="file://$PROJECT_DIR$/files/form.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/files/display.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/KottbullarRecept.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-360" />
@@ -670,16 +649,6 @@
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_192/src.zip!/java/util/Map.java" />
-    <entry file="file://$PROJECT_DIR$/resources/reverseResult.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/reverse.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/files/index2.html" />
     <entry file="file://$PROJECT_DIR$/src/main/java/server/IndexModule.java" />
     <entry file="file://$PROJECT_DIR$/src/404.html">
@@ -741,13 +710,6 @@
     <entry file="file://$PROJECT_DIR$/mrjohansson.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/files/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="529">
-          <caret line="115" column="1" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/api/HTTPMethods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -764,9 +726,6 @@
           <caret line="99" selection-start-line="99" selection-end-line="99" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/jsonInfo.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/server/Main.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -785,6 +744,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/FilesModule.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/PersonAge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1445">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/files/display.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/files/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="210" column="72" selection-start-line="210" selection-start-column="72" selection-end-line="210" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/server/ReverseModule.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
@@ -796,23 +783,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/HTTPServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="63" column="4" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4670#4686#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/FilesModule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/files/form.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="das://51edfce9-5edc-485b-ac77-646ac0ff74a1/schema/main/table/people">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
@@ -820,6 +792,20 @@
           <filtering enabled="true" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/server/HTTPServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-532">
+          <caret line="14" column="40" lean-forward="true" selection-start-line="14" selection-start-column="40" selection-end-line="14" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4670#4686#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonInfo.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/api/HTTPModule.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -829,24 +815,30 @@
             <element signature="imports" expanded="true" />
             <element signature="e#1091#1092#0" expanded="true" />
             <element signature="e#1135#1136#0" expanded="true" />
-            <element signature="e#2492#2493#0" expanded="true" />
-            <element signature="e#2536#2537#0" expanded="true" />
-            <element signature="e#2618#2619#0" expanded="true" />
-            <element signature="e#2662#2663#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/server/PersonAge.java">
+    <entry file="file://$PROJECT_DIR$/resources/jsonInfo.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/reverseResult.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="88" selection-start-line="88" selection-end-line="88" />
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/reverse.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/api/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
+        <state relative-caret-position="782">
           <caret line="51" selection-start-line="51" selection-end-line="51" />
         </state>
       </provider>
