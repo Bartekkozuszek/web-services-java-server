@@ -3,11 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>404</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Montserrat);
+        html,
+        body {
+            overflow: hidden;
+            margin: 0px;
+        }
+        .background {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            background-image: url(/files/images/sorry.jpg);
+
+        }
+
+        .content-wrapper {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            flex-flow: column nowrap;
+            color: #fff;
+            font-family: Montserrat;
+            text-transform: uppercase;
+        }
+
+        .content-title {
+            font-size: 12vh;
+            line-height: 1.4;
+        }
+
+
+
+    </style>
 </head>
 <body>
-
-<h1>404: page not found</h1>
-<h3>...or you just destroyed the internet</h3>
-
+<div class="container">
+    <section class="background">
+        <div class="content-wrapper">
+            <h1 class="content-title">404: page not found</h1>
+            <p>...or you just destroyed the internet</p>
+        </div>
+    </section>
+</div>
 </body>
 </html>

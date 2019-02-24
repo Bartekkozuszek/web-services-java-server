@@ -68,7 +68,7 @@ public class HTTPServer implements Runnable{
         int fileLength = (int)file.length();
         byte [] requestedFile = readFileData(file, fileLength);
 
-        response.setContentType("text/plain");
+        response.setContentType("text/html");
         response.setContentLength(fileLength);
         response.setData(requestedFile);
 
