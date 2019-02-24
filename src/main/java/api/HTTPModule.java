@@ -105,12 +105,12 @@ public abstract class HTTPModule implements HTTPMethods {
         }
     }
 
-    protected byte [] readFileData(File file, int fileLength){
+    public byte [] readFileData(File file, int fileLength){
 
         return getBytes(file, fileLength);
     }
 
-    protected static byte[] getBytes(File file, int fileLength) {
+    public static byte[] getBytes(File file, int fileLength) {
         byte [] data = new byte [fileLength];
         try (FileInputStream fileIn = new FileInputStream(file)) {
             fileIn.read(data);
