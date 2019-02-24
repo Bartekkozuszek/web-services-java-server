@@ -6,9 +6,27 @@ public class ResponseObject {
     private int contentLength;
     private byte [] data;
     private String errorMessage;
+    private String statusLine;
+    private String location;
 
 
-    public String getContentType() {
+    public String getStatusLine() {
+		return statusLine;
+	}
+
+	public void setStatusLine(String statusLine) {
+		this.statusLine = statusLine;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getContentType() {
         return contentType;
     }
 

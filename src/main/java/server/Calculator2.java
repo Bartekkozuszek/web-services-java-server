@@ -77,6 +77,12 @@ public class Calculator2 extends HTTPModule {
         htmlBuilder.append("<div class=\"content-wrapper\">");
         htmlBuilder.append(" <h1 class=\"content-title\">Calculator</h1>");
 
+    /*    htmlBuilder.append("<h2>Greeting Request</h2><form action='' method='get'>Salutation:<br><input type='text' name='salutation' value='' placeholder = 'Mr'>");
+        htmlBuilder.append("<br>First name:<br><input type='text' name='firstname' value='' placeholder = 'Bob'>");
+        htmlBuilder.append("<br>Last name:<br><input type='text' name='lastname' value='' placeholder = 'Dobalina'><br><br>");
+        htmlBuilder.append("<input type='submit' value='Submit'></form>");
+
+*/
         htmlBuilder.append("<p class=\"content-subtitle\">In the URL, add ?v1=<span class=\"colored\">firstVariable</span>&v2=<span class=\"colored\">secondVariable</span>&operator=<span class=\"colored\">operator</span> e.g. ?v1=25&v2=58&operator=*</p>");
         htmlBuilder.append("<div class=\"calculator\">" + "<p>" + answerType + " output: " + " <span class=\"output\">" + output + "</span></p>");
         htmlBuilder.append("</div>");

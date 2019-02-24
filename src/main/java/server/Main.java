@@ -26,11 +26,14 @@ public class Main {
         HTTPModule files = new FilesModule();
         HTTPModule calculator = new Calculator2();
         HTTPModule reverse = new ReverseModule();
+        HTTPModule greetings = new  GreetingsApp();
+        
         HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);
         HTTPServer.getFunctions().put("calculator", calculator);
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
+        HTTPServer.getFunctions().put("greetings", greetings);
 
 
 

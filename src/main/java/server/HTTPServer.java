@@ -254,12 +254,24 @@ public class HTTPServer implements Runnable{
         try{
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
-
-            out.println("HTTP/1.1 200 OK");
+            
+            if(response.getStatusLine()== null) {
+            	out.println("HTTP/1.1 200 OK");
+            }
+            else {
+            	out.println(response.getStatusLine());
+            }
             out.println("Server: Java HTTP Server from mrjohansson : 1.0");
             out.println("date: " + new Date());
             out.println("content-type: " + response.getContentType());
-            out.println("content-length: " + response.getContentLength());
+            if(response.getContentLength()>0) {
+            	 out.println("content-length: " + response.getContentLength());
+            	}
+            
+            if(response.getLocation()!= null) {
+            	out.println("Location: " + response.getLocation());
+            }
+            
             out.println();
             out.flush();
 
