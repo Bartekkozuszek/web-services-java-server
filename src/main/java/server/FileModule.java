@@ -39,18 +39,15 @@ public class FileModule extends HTTPModule {
     }
 
 
-    //TODO add fileNotFound() here?
-
-
-    @Override
-    public byte [] readFileData(File file, int fileLength){
-
-        return getBytes(file, fileLength);
-    }
-
-
-    public String getContentType(String request){
-
-        return super.getContentType(request);
-    }
+//    @Override
+//    private byte [] readFileData(File file, int fileLength){
+//
+//        return getBytes(file, fileLength);
+//    }
+//
+//
+//    public String getContentType(String request){
+//
+//        return super.getContentType(request);
+//    }
 }

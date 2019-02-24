@@ -48,23 +48,24 @@ public abstract class HTTPModule implements HTTPMethods {
     }
     public ResponseObject post(RequestObject request, ResponseObject response){
 
-        File file = new File(WEB_ROOT, "resources/jsonInfo.html");
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-        Writer writer = new OutputStreamWriter(out);
-        writer.write(request.getHeader().get("body"));
-        writer.close();
-        int fileLength = (int) file.length();
-        byte[] requestedFile = readFileData(file, fileLength);
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(fileLength);
-        response.setData(requestedFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return response;
+//        File file = new File(WEB_ROOT, "resources/jsonInfo.html");
+//        OutputStream out = null;
+//        try {
+//            out = new FileOutputStream(file);
+//        Writer writer = new OutputStreamWriter(out);
+//        writer.write(request.getHeader().get("body"));
+//        writer.close();
+//        int fileLength = (int) file.length();
+//        byte[] requestedFile = readFileData(file, fileLength);
+//        ResponseObject getResponse = get(request, response);
+//        response.setContentType(getResponse.getContentType());
+//        response.setContentLength(fileLength);
+//        response.setData(requestedFile);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return response;
+        return setResponse(response);
     }
     public ResponseObject put(RequestObject request, ResponseObject response){
         return setResponse(response);

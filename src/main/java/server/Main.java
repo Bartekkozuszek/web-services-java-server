@@ -18,10 +18,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
-        //HTTPServer.getFunctions().add(new Calculator3());
-
-
         //Moduler läggs in här
         HTTPModule files = new FileModule();
         HTTPModule calculator = new Calculator();
@@ -31,19 +27,6 @@ public class Main {
         HTTPServer.getFunctions().put("calculator", calculator);
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
-
-
-
-
-        //URLClassLoader ucl = createClassLoader(args[0]);
-
-//        ServiceLoader<HTTPModule> loader =
-//                ServiceLoader.load(HTTPModule.class, ucl);
-//
-//        for (HTTPModule modules : loader) {
-//        }
-
-
 
 
         try {
