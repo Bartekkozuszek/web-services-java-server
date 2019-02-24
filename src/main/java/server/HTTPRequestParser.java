@@ -68,7 +68,6 @@ public class HTTPRequestParser {
                     requestData.put("body", bodyString);
                 }
             }
-            requestData.forEach((a,b)-> System.out.println(a + " : " + b));
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }

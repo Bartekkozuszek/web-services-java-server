@@ -9,9 +9,6 @@ import java.util.*;
 public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
-    //static final String FILE_NOT_FOUND ="resources/404.html";
-    //static final File WEB_ROOT = new File(".");
-    //static final boolean verbose = true;
 
     private static Map<String, HTTPMethods> functions = new HashMap<String, HTTPMethods>();
 
@@ -81,8 +78,6 @@ public class HTTPServer implements Runnable{
             out.println();
             out.flush();
 
-            System.out.println("data in response: " + response.getData());
-            //[B@1f97e758
             if(response.getData() != null){
                 byte[] content = response.getData();
                 System.out.println("content: " + content);
