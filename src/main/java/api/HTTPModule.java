@@ -121,7 +121,7 @@ public abstract class HTTPModule implements HTTPMethods {
             e.printStackTrace();
         }
         JsonWriter jwriter = Json.createWriter(writer);
-        JsonObject jObject = Json.createObjectBuilder().add("name", "age").build();
+        JsonObject jObject = Json.createObjectBuilder().add("adress", "age").build();
         jwriter.writeObject(jObject);
         jwriter.close();
     }

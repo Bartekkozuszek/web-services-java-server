@@ -114,9 +114,9 @@ public class ReverseModule extends HTTPModule {
                                 "\n" +
                                 "/* Fading animation */\n" +
                                 ".fade {\n" +
-                                "  -webkit-animation-name: fade;\n" +
+                                "  -webkit-animation-adress: fade;\n" +
                                 "  -webkit-animation-duration: 1.5s;\n" +
-                                "  animation-name: fade;\n" +
+                                "  animation-adress: fade;\n" +
                                 "  animation-duration: 1.5s;\n" +
                                 "}\n" +
                                 "\n" +
