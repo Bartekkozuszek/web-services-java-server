@@ -19,12 +19,12 @@ public class Main {
     public static void main(String[] args) {
 
         //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
-        //HTTPServer.getFunctions().add(new Calculator());
+        //HTTPServer.getFunctions().add(new Calculator3());
 
 
         //Moduler läggs in här
         HTTPModule files = new FilesModule();
-        HTTPModule calculator = new Calculator2();
+        HTTPModule calculator = new Calculator();
         HTTPModule reverse = new ReverseModule();
         HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);

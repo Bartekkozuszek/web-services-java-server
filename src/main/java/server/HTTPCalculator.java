@@ -24,7 +24,7 @@ public class HTTPCalculator implements RequestHandler{
         htmlBuilder.append("<!DOCTYPE html>");
         htmlBuilder.append("<html>");
         htmlBuilder.append("<body>");
-        htmlBuilder.append("<h1>Calculator</>");
+        htmlBuilder.append("<h1>Calculator3</>");
         htmlBuilder.append("<h2>"+ answerType + " output: " + output + "</h2>");
         htmlBuilder.append("</body>");
         htmlBuilder.append("</html>");
