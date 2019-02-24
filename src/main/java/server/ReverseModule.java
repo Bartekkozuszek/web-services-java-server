@@ -21,7 +21,7 @@ public class ReverseModule extends HTTPModule {
     @Override
     public ResponseObject get(RequestObject request, ResponseObject response){
 
-        String input = request.getRequestData().get("requestString");
+        String input = request.getHeader().get("requestString");
         System.out.println(input);
         if(input.contains("?") && input.contains("=")) {
             String param = input.substring(input.lastIndexOf("=") + 1);
@@ -33,7 +33,7 @@ public class ReverseModule extends HTTPModule {
             response.setContentLength(fileLength);
             response.setData(requestedFile);
         } else {
-            File file = new File(WEB_ROOT, "reverse.html");
+            File file = new File(WEB_ROOT, "resources/reverse.html");
             int fileLength = (int) file.length();
             byte[] requestedFile = readFileData(file, fileLength);
 
@@ -186,7 +186,7 @@ public class ReverseModule extends HTTPModule {
                         "</script>")
                 .append("</body></html>");
         System.out.println("Creating html file");
-        File htmlFileResult = new File(WEB_ROOT, "reverseResult.html");
+        File htmlFileResult = new File(WEB_ROOT, "resources/reverseResult.html");
         try {
             OutputStream out = new FileOutputStream(htmlFileResult.getAbsoluteFile());
             Writer writer = new OutputStreamWriter(out);

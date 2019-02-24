@@ -14,8 +14,9 @@ public class RequestObject {
     private String contentLength;
     private String body;
 
-    private Map<String, String> requestData;
+    private Map<String, String> header;
     private Map<String, String> params;
+    //private Map<String, String> body;
 
     public String getHTTPMethod() {
         return HTTPMethod;
@@ -89,12 +90,12 @@ public class RequestObject {
         this.version = version;
     }
 
-    public Map<String, String> getRequestData() {
-        return requestData;
+    public Map<String, String> getHeader() {
+        return header;
     }
 
-    public void setRequestData(Map<String, String> requestData) {
-        this.requestData = requestData;
+    public void setHeader(Map<String, String> header) {
+        this.header = header;
     }
 
     public Map<String, String> getParams() {
@@ -104,4 +105,12 @@ public class RequestObject {
     public void setParams(Map<String, String> params) {
         this.params = params;
     }
+
+//    public Map<String, String> getBody() {
+//        return body;
+//    }
+//
+//    public void setBody(Map<String, String> body) {
+//        this.body = body;
+//    }
 }

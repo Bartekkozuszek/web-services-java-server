@@ -18,7 +18,7 @@ public class FilesModule extends HTTPModule {
     @Override
     public ResponseObject get(RequestObject request, ResponseObject response) {
 
-        String input = request.getRequestData().get("requestString");
+        String input = request.getHeader().get("requestString");
         System.out.println(input);
         File file = new File(WEB_ROOT, input);
         System.out.println("file: " + file);
