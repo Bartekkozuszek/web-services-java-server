@@ -14,12 +14,11 @@ public class FileModule extends HTTPModule {
     public ResponseObject get(RequestObject request, ResponseObject response) {
 
         String input = request.getHeader().get("requestString");
-        System.out.println(input);
         File file = new File(WEB_ROOT, input);
 
         if(!file.exists()) {
 
-            file = new File(WEB_ROOT, "404.html");
+            file = new File(WEB_ROOT, "resources/404.html");
         }
 
         int fileLength = (int)file.length();
@@ -38,7 +37,7 @@ public class FileModule extends HTTPModule {
 
         return super.head(request, response);
     }
-    
+
 
     //TODO add fileNotFound() here?
 
