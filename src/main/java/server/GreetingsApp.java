@@ -54,14 +54,14 @@ public class GreetingsApp extends HTTPModule {
 
 		contentBuilder.append("</h1>" + htmlPostfix);
 
-
-		response = new ResponseObject();
+//		response = new ResponseObject();
 		response.setData(contentBuilder.toString().getBytes());
 		response.setContentType("text/html");
 		response.setContentLength(contentBuilder.toString().length());
 		return response;
 
 	}
+
 
 
 	@Override
@@ -78,7 +78,7 @@ public class GreetingsApp extends HTTPModule {
 		}
 
 
-		response = new ResponseObject();
+	//	response = new ResponseObject();
 
 		response.setContentType("text/html");
 		response.setStatusLine("HTTP/1.1 302 Found");
@@ -87,6 +87,6 @@ public class GreetingsApp extends HTTPModule {
 		return response;
 
 
-	}
 
+	}
 }

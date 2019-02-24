@@ -1,6 +1,7 @@
 package server;
 
 import api.HTTPModule;
+import api.RESTHandler;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -27,6 +28,8 @@ public class Main {
         HTTPModule calculator = new Calculator2();
         HTTPModule reverse = new ReverseModule();
         HTTPModule greetings = new  GreetingsApp();
+        HTTPModule resthandler = new  RESTHandler();
+        
         
         HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);
@@ -34,6 +37,7 @@ public class Main {
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
         HTTPServer.getFunctions().put("greetings", greetings);
+        HTTPServer.getFunctions().put("api", resthandler);
 
 
 

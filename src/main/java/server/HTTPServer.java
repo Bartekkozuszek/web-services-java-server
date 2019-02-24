@@ -49,6 +49,11 @@ public class HTTPServer implements Runnable{
                     response = m.head(request, response);
                 } else if (httpMethod.equals("POST")) {
                     response = m.post(request, response);
+                } else if (httpMethod.equals("DELETE")) {
+                    response = m.delete(request, response);
+                    
+                } else if (httpMethod.equals("PUT")) {
+                    response = m.put(request, response);
                 }
                 //else fileNotFound();
             } else{
