@@ -56,7 +56,10 @@ public class PersonAge extends HTTPModule {
                             "}\n" +
                             "\n" +
                             ".years {\n" +
-                            "color: #c41c4f;\n" +
+                            "\tcolor: #c41c4f;\n" +
+                            "}" +
+                            ".colored {\n" +
+                            "\tcolor: #58ef73;\n" +
                             "}")
                     .append("</style>")
                     .append("</head>")
@@ -64,7 +67,7 @@ public class PersonAge extends HTTPModule {
                     .append("<div class=\"container\">")
                     .append("<section class=\"background\">")
                     .append("<div class=\"content-wrapper\">")
-                    .append("<h1 class=\"content-title\">" + "Know your age" + "</h1>" + "<div class=\"personage\">" + "<p>Hello " + name + ", you are " + "<span class=\"years\">" + (Calendar.getInstance().get(Calendar.YEAR) -
+                    .append("<h1 class=\"content-title\">" + "Know your age" + "</h1>" + "<p class=\"content-subtitle\">Enter your name and birth year in the URL. e.g personage?name=<span class=\"colored\">Bartek</span>&year=<span class=\"colored\">1983</span></p>" + "<div class=\"personage\">" + "<p>Hello " + name + ", you are " + "<span class=\"years\">" + (Calendar.getInstance().get(Calendar.YEAR) -
                             Integer.parseInt(p.get("year"))) + "</span>" + " years old this year!</p>")
                     .append("</div>")
                     .append("</div>")
