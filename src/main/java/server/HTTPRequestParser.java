@@ -18,7 +18,6 @@ public class HTTPRequestParser {
 
         try{
 
-            //clientRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             StringTokenizer parse = new StringTokenizer(clientRequest.readLine());
             requestData.put("method", parse.nextToken());
             String requestString = parse.nextToken();
@@ -28,13 +27,11 @@ public class HTTPRequestParser {
                 index = requestString.indexOf("?");
                 params = parseParams(requestString.substring(index+1));
                 requestString = requestString.substring(0, index); //Without ?+parameters extension
-
             }
-
 
             requestData.put("request", requestString); //save Without ?+parameters extension
 
-            requestString= requestString.substring(1);
+            requestString = requestString.substring(1);
 
             index = requestString.indexOf("/");
             if(index>0){
@@ -49,10 +46,6 @@ public class HTTPRequestParser {
                 requestData.put("request", "/files/index.html");
                 requestData.put("requestString", "/files/index.html");
             }
-
-            System.out.println("requeststring: " + requestData.get("requestString")) ;
-            System.out.println("request: " + requestData.get("request")) ;
-            System.out.println("destination: " + requestData.get("destination")) ;
 
             requestData.put("version", parse.nextToken());
 
@@ -69,18 +62,13 @@ public class HTTPRequestParser {
                     requestData.put("body", line);
                 }
                 else if(line.equals("")&& requestData.containsKey("Content-Length")){
-                    //String bodyString = clientRequest.lines().collect(Collectors.joining(System.lineSeparator()));
                     char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
                     clientRequest.read(body);
                     String bodyString = new String(body);
-                    System.out.println(bodyString);
                     requestData.put("body", bodyString);
                 }
             }
-            System.out.println("request: " + requestData.get("request"));
-            System.out.println("requestData:-----------------------");
             requestData.forEach((a,b)-> System.out.println(a + " : " + b));
-            System.out.println("requestData------------------------");
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }
@@ -94,11 +82,8 @@ public class HTTPRequestParser {
     private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
-        //  request = URLDecoder.decode(request, "UTF-8");
-
-        //   if (request.contains("?") && request.contains("=")) {
-        //       request = request.substring(request.indexOf("?") + 1);
         String[] tempParams = request.split("&");
+
         for (String item : tempParams) {
             String[] tempParam = item.split("=");
             params.put(tempParam[0], tempParam[1]);
