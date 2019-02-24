@@ -91,10 +91,10 @@ public class HTTPServer implements Runnable{
     private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
-        request = URLDecoder.decode(request, "UTF-8");
+      //  request = URLDecoder.decode(request, "UTF-8");
 
-        if (request.contains("?") && request.contains("=")) {
-            request = request.substring(request.indexOf("?") + 1);
+     //   if (request.contains("?") && request.contains("=")) {
+     //       request = request.substring(request.indexOf("?") + 1);
             String[] tempParams = request.split("&");
             for (String item : tempParams) {
                 String[] tempParam = item.split("=");
@@ -103,9 +103,7 @@ public class HTTPServer implements Runnable{
             params.forEach((a, b) -> System.out.println(a + " : " + b));
             return params;
         }
-        return null;
-    }
-
+     //   return null;
 
 
     private String parseFuncName(String request){
