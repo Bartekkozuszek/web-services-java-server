@@ -9,12 +9,18 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.net.URLClassLoader;
+import api.Database;
+
 import java.util.Date;
+
 
 import static server.HTTPServer.PORT;
 import static server.HTTPServer.verbose;
 
 public class Main {
+
+
+
 
     public static void main(String[] args) {
 
@@ -31,8 +37,6 @@ public class Main {
         HTTPServer.getFunctions().put("calculator", calculator);
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
-
-
 
 
         //URLClassLoader ucl = createClassLoader(args[0]);
@@ -53,6 +57,9 @@ public class Main {
 
             while (true){
                 HTTPServer server = new HTTPServer(serverSocket.accept());
+                Database db = new Database();
+                if(db.hasConnection()) System.out.println("Database connection established.");
+                else System.out.println("No database connection.");
 
                 if(verbose) System.out.println("Connection established. " + new Date());
 

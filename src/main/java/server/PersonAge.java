@@ -1,5 +1,6 @@
 package server;
 
+import api.Database;
 import api.HTTPModule;
 import java.util.Calendar;
 import java.util.Map;
@@ -10,7 +11,8 @@ public class PersonAge extends HTTPModule {
     public ResponseObject get(RequestObject request, ResponseObject response){
         Map<String,String> p = request.getParams();
         String name = p.get("name").substring(0,1).toUpperCase() + p.get("name").substring(1);
-
+        Database db = new Database();
+        db.addPersonQuery(p.get("name"));
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html> <html>")
                 .append("<head>")
@@ -74,6 +76,7 @@ public class PersonAge extends HTTPModule {
                 .append("</html>");
         System.out.println("Creating html file");
 
+
         response = new ResponseObject();
         response.setData(html.toString().getBytes());
         response.setContentType("text/html");
@@ -82,5 +85,8 @@ public class PersonAge extends HTTPModule {
         return response;
     }
 
-
+    @Override
+    public ResponseObject post(RequestObject request, ResponseObject response) {
+        return super.post(request, response);
+    }
 }

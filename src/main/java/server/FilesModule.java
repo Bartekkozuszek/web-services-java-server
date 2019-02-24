@@ -47,19 +47,7 @@ public class FilesModule extends HTTPModule {
 
     @Override
     public ResponseObject post(RequestObject request, ResponseObject response) {
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(getResponse.getContentLength());
-//        if (request.getBody().isEmpty()) {
-//            return getResponse;
-//        } else{
-//            JSONObject j = new JSONObject(request.getBody());
-//            try {
-//                j.writeToJson(j.readFromJson());
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
+
         return response;
     }
 
