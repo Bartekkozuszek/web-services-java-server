@@ -10,9 +10,9 @@ import java.util.*;
 public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
-    //static final String FILE_NOT_FOUND ="404.html";
+    static final String FILE_NOT_FOUND ="404.html";
     //static final String DEFAULT_FILE = "src/index.html";
-    //static final File WEB_ROOT = new File(".");
+    static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
 
     private static Map<String, HTTPMethods> functions = new HashMap<String, HTTPMethods>();
@@ -51,9 +51,9 @@ public class HTTPServer implements Runnable{
                 } else if (httpMethod.equals("POST")) {
                     response = m.post(request, response);
                 }
-
-
                 //else fileNotFound();
+            } else{
+                response = fileNotFound(response);
             }
             handleOutput(response, clientSocket);
             clientSocket.close();
@@ -62,7 +62,18 @@ public class HTTPServer implements Runnable{
         }
     }
 
-    private void fileNotFound() {
+    private ResponseObject fileNotFound(ResponseObject response) {
+        File file = new File(WEB_ROOT, FILE_NOT_FOUND);
+        System.out.println("file: " + file);
+
+        int fileLength = (int)file.length();
+        byte [] requestedFile = readFileData(file, fileLength);
+
+        response.setContentType("text/plain");
+        response.setContentLength(fileLength);
+        response.setData(requestedFile);
+
+        return response;
     }
 
 
@@ -80,21 +91,21 @@ public class HTTPServer implements Runnable{
     private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
-        //     request = URLDecoder.decode(request, "UTF-8");
+        request = URLDecoder.decode(request, "UTF-8");
 
-
-        //      if(request.contains("?") && request.contains("=")){
-        //          request = request.substring(request.indexOf("?") + 1);
-        String[] tempParams = request.split("&");
-        for (String item : tempParams) {
-            String[] tempParam = item.split("=");
-            params.put(tempParam[0], tempParam[1]);
+        if (request.contains("?") && request.contains("=")) {
+            request = request.substring(request.indexOf("?") + 1);
+            String[] tempParams = request.split("&");
+            for (String item : tempParams) {
+                String[] tempParam = item.split("=");
+                params.put(tempParam[0], tempParam[1]);
+            }
+            params.forEach((a, b) -> System.out.println(a + " : " + b));
+            return params;
         }
-        params.forEach((a, b) -> System.out.println(a + " : " + b));
-        return params;
-
-        //    return null;
+        return null;
     }
+
 
 
     private String parseFuncName(String request){
