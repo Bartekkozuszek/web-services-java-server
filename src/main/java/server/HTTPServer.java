@@ -36,7 +36,7 @@ public class HTTPServer implements Runnable{
             String httpMethod = request.getHeader().get("method");
 
             if (functions.containsKey(destination)) {
-                HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
+                HTTPMethods m = functions.get(destination);
 
                 switch (httpMethod) {
                     case "GET":

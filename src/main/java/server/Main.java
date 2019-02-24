@@ -18,7 +18,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //Moduler läggs in här
         HTTPModule files = new FileModule();
         HTTPModule calculator = new Calculator();
         HTTPModule reverse = new ReverseModule();
@@ -46,7 +45,6 @@ public class Main {
     }
 
 
-    //Förbredd för service loader
     private static URLClassLoader createClassLoader(String fileLocation){
         File loc = new File(fileLocation);// hur sätts filelocation via args, ./lib?
 
