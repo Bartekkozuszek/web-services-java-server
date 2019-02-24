@@ -9,12 +9,12 @@ import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Date;
 
 import static server.HTTPServer.PORT;
-import static server.HTTPServer.verbose;
+
 
 public class Main {
+
 
     public static void main(String[] args) {
 
@@ -28,17 +28,14 @@ public class Main {
         HTTPModule personAge = new PersonAge();
         HTTPServer.getFunctions().put("personage", personAge);
 
-
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
             System.out.println("Server started.\nListening for connections on port: "
                     + PORT + "...");
 
+
             while (true){
                 HTTPServer server = new HTTPServer(serverSocket.accept());
-
-                if(verbose) System.out.println("Connection established. " + new Date());
-
                 Thread thread = new Thread(server);
                 thread.start();
             }
@@ -47,6 +44,7 @@ public class Main {
             System.err.println("Server connection error" + e.getMessage());
         }
     }
+
 
     //Förbredd för service loader
     private static URLClassLoader createClassLoader(String fileLocation){

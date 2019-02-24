@@ -54,8 +54,8 @@ public class ReverseModule extends HTTPModule {
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>\n<html><head><meta charset=\"utf-8\"><title>Reverse Writing </title></head>\n")
                 .append("<body bgcolor=\"#E6E6FA\">")
-                .append("<h1><font color=\"blue\">Reverse Word!</h1>")
-                .append("<h2>Here is the text you wrote from right to left:</h3>")
+                .append("<h1><font color=\"blue\"/>Reverse Word!</h1>")
+                .append("<h2>Here is the text you wrote from right to left:</h2>")
                 .append("<bdo dir=\"rtl\"><font color=\"red\" size=\"6\">").append(param).append("</bdo> \n")
                 .append("<p></p>")
                 .append("<p></p>")
