@@ -99,7 +99,6 @@ public class Calculator extends HTTPModule {
 
                 switch (operator) {
                     case '*':
-                        System.out.println("multiplication");
                         output = output * Double.parseDouble(num);
                         answerType = "Product";
                         break;

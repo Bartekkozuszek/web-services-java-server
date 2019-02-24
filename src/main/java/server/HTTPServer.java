@@ -10,7 +10,6 @@ public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
     static final String FILE_NOT_FOUND ="resources/404.html";
-    //static final String DEFAULT_FILE = "src/index.html";
     static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
 
@@ -35,7 +34,6 @@ public class HTTPServer implements Runnable{
 
 
             HTTPRequestParser HTTPParser = new HTTPRequestParser();
-            //RequestObject request = requestToObject(clientRequest);
             RequestObject request = HTTPParser.parse(clientRequest);
             ResponseObject response = new ResponseObject();
             String destination = request.getHeader().get("destination");
@@ -45,110 +43,117 @@ public class HTTPServer implements Runnable{
             if (functions.containsKey(destination)) {
                 HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
 
-                if (httpMethod.equals("GET")) {
-                    response = m.get(request, response);
-                } else if (httpMethod.equals("HEAD")) {
-                    response = m.head(request, response);
-                } else if (httpMethod.equals("POST")) {
-                    response = m.post(request, response);
+                switch (httpMethod) {
+                    case "GET":
+                        response = m.get(request, response);
+                        break;
+
+                    case "HEAD":
+                        response = m.head(request, response);
+                        break;
+
+                    case "POST":
+                        response = m.post(request, response);
+                        break;
+                    default:
+                        System.out.println("");
                 }
-                //else fileNotFound();
-            } else{
-                response = fileNotFound(response);
+
+                handleOutput(response, clientSocket);
+                clientSocket.close();
             }
-            handleOutput(response, clientSocket);
-            clientSocket.close();
-        }catch(IOException e){
+        }catch(IOException e) {
             System.out.println(e.getMessage());
         }
+
     }
 
-    private ResponseObject fileNotFound(ResponseObject response) {
-        File file = new File(WEB_ROOT, FILE_NOT_FOUND);
-        System.out.println("file: " + file);
-
-        int fileLength = (int)file.length();
-        byte [] requestedFile = readFileData(file, fileLength);
-
-        response.setContentType("text/plain");
-        response.setContentLength(fileLength);
-        response.setData(requestedFile);
-
-        return response;
-    }
-
-
-    private String parseRequest(String request){
-        System.out.println("request length: " + request.length());
-        System.out.println("request: " + request);
-
-        index = request.indexOf("/", 1);
-        System.out.println("index: " + index);
-
-        return request.substring(1, index);
-    }
+//    private ResponseObject fileNotFound(ResponseObject response) {
+//        File file = new File(WEB_ROOT, FILE_NOT_FOUND);
+//        System.out.println("file: " + file);
+//
+//        int fileLength = (int)file.length();
+//        byte [] requestedFile = readFileData(file, fileLength);
+//
+//        response.setContentType("text/plain");
+//        response.setContentLength(fileLength);
+//        response.setData(requestedFile);
+//
+//        return response;
+//    }
 
 
-    private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
-
-        Map<String, String> params = new HashMap<String, String>();
-      //  request = URLDecoder.decode(request, "UTF-8");
-
-     //   if (request.contains("?") && request.contains("=")) {
-     //       request = request.substring(request.indexOf("?") + 1);
-            String[] tempParams = request.split("&");
-            for (String item : tempParams) {
-                String[] tempParam = item.split("=");
-                params.put(tempParam[0], tempParam[1]);
-            }
-            params.forEach((a, b) -> System.out.println(a + " : " + b));
-            return params;
-        }
-     //   return null;
+//    private String parseRequest(String request){
+//        System.out.println("request length: " + request.length());
+//        System.out.println("request: " + request);
+//
+//        index = request.indexOf("/", 1);
+//        System.out.println("index: " + index);
+//
+//        return request.substring(1, index);
+//    }
 
 
-    private String parseFuncName(String request){
+//    private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
+//
+//        Map<String, String> params = new HashMap<String, String>();
+//      //  request = URLDecoder.decode(request, "UTF-8");
+//
+//     //   if (request.contains("?") && request.contains("=")) {
+//     //       request = request.substring(request.indexOf("?") + 1);
+//            String[] tempParams = request.split("&");
+//            for (String item : tempParams) {
+//                String[] tempParam = item.split("=");
+//                params.put(tempParam[0], tempParam[1]);
+//            }
+//            params.forEach((a, b) -> System.out.println(a + " : " + b));
+//            return params;
+//        }
+//     //   return null;
+//
+//
+//    private String parseFuncName(String request){
+//
+//        return request.substring(index + 1, request.indexOf("?", index + 1));
+//    }
 
-        return request.substring(index + 1, request.indexOf("?", index + 1));
-    }
+
+//    private String getContentType(String request){
+//
+//        if(request.endsWith(".htm") || request.endsWith(".html")){
+//
+//            return "text/html";
+//        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
+//            return "image/jpg";
+//        }else{
+//            return "text/plain";
+//        }
+//    }
 
 
-    private String getContentType(String request){
-
-        if(request.endsWith(".htm") || request.endsWith(".html")){
-
-            return "text/html";
-        }else if (request.endsWith(".jpg") || request.endsWith(".jpeg")){
-            return "image/jpg";
-        }else{
-            return "text/plain";
-        }
-    }
-
-
-    private byte [] readFileData(File file, int fileLength){
-
-        FileInputStream fileIn = null;
-
-        byte [] data = new byte [fileLength];
-
-        try{
-            fileIn = new FileInputStream(file);
-            fileIn.read(data);
-
-        }catch(IOException e){
-
-        }finally {
-            if(fileIn != null){
-                try{
-                    fileIn.close();
-                }catch (IOException e){
-
-                }
-            }
-        }
-        return data;
-    }
+//    private byte [] readFileData(File file, int fileLength){
+//
+//        FileInputStream fileIn = null;
+//
+//        byte [] data = new byte [fileLength];
+//
+//        try{
+//            fileIn = new FileInputStream(file);
+//            fileIn.read(data);
+//
+//        }catch(IOException e){
+//
+//        }finally {
+//            if(fileIn != null){
+//                try{
+//                    fileIn.close();
+//                }catch (IOException e){
+//
+//                }
+//            }
+//        }
+//        return data;
+//    }
 
 
 //    private RequestObject requestToObject(BufferedReader rawRequest){
@@ -232,18 +237,18 @@ public class HTTPServer implements Runnable{
 //    }
 
 
-    private Map<String, String> parseStrings(List<String> strings){
-        String body = null;
-        for (String line : strings) {
-            if(line.contains("content-type")){
-                line.substring(line.indexOf(": "), line.length());
-            }
-            if(!line.contains(":") && !line.contains("")){
-                body = line;
-            }
-        }
-        return null;
-    }
+//    private Map<String, String> parseStrings(List<String> strings){
+//        String body = null;
+//        for (String line : strings) {
+//            if(line.contains("content-type")){
+//                line.substring(line.indexOf(": "), line.length());
+//            }
+//            if(!line.contains(":") && !line.contains("")){
+//                body = line;
+//            }
+//        }
+//        return null;
+//    }
 
 
     private void handleOutput(ResponseObject response, Socket clientSocket){
@@ -268,9 +273,6 @@ public class HTTPServer implements Runnable{
                 dataOut.write(content);
                 dataOut.flush();
                 dataOut.close();
-//            dataOut.write(content);
-//            dataOut.flush();
-//            dataOut.close();
             }
 
         }catch (java.io.IOException e){
