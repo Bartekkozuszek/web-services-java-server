@@ -4,13 +4,12 @@ import api.HTTPMethods;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URLDecoder;
 import java.util.*;
 
 public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
-    static final String FILE_NOT_FOUND ="404.html";
+    static final String FILE_NOT_FOUND ="resources/404.html";
     //static final String DEFAULT_FILE = "src/index.html";
     static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
@@ -37,8 +36,8 @@ public class HTTPServer implements Runnable{
 
             RequestObject request = requestToObject(rawRequest);
             ResponseObject response = new ResponseObject();
-            String destination = request.getRequestData().get("destination");
-            String httpMethod = request.getRequestData().get("method");
+            String destination = request.getHeader().get("destination");
+            String httpMethod = request.getHeader().get("method");
             System.out.println("method: " + httpMethod);
 
             if (functions.containsKey(destination)) {
@@ -188,8 +187,6 @@ public class HTTPServer implements Runnable{
             	requestData.put("destination", "files");
             	requestData.put("request", "/files/index.html");
             	requestData.put("requestString", "/files/index.html");
-            	
-            	
             }
             
             System.out.println("requeststring: " + requestData.get("requestString")) ;
@@ -211,7 +208,6 @@ public class HTTPServer implements Runnable{
                     requestData.put("body", line);
                 }
                 else if(line.equals("")&& requestData.containsKey("Content-Length")){
-                    //String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
                     char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
                     rawRequest.read(body);
                     String bodyString = new String(body);
@@ -226,7 +222,7 @@ public class HTTPServer implements Runnable{
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }
-        request.setRequestData(requestData);
+        request.setHeader(requestData);
         request.setParams(params);
 
         return request;
