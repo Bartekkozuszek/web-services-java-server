@@ -28,13 +28,15 @@ public class HTTPServer implements Runnable{
     public void run() {
 
         System.out.println(Thread.currentThread().getName());
-        BufferedReader rawRequest = null;
+        BufferedReader clientRequest = null;
 
         try {
-            rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            clientRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 
-            RequestObject request = requestToObject(rawRequest);
+            HTTPRequestParser HTTPParser = new HTTPRequestParser();
+            //RequestObject request = requestToObject(clientRequest);
+            RequestObject request = HTTPParser.parse(clientRequest);
             ResponseObject response = new ResponseObject();
             String destination = request.getHeader().get("destination");
             String httpMethod = request.getHeader().get("method");
@@ -149,91 +151,86 @@ public class HTTPServer implements Runnable{
     }
 
 
-    private RequestObject requestToObject(BufferedReader rawRequest){
+//    private RequestObject requestToObject(BufferedReader rawRequest){
+//
+//        Map<String, String> params = new HashMap<String, String>();
+//        Map<String, String> requestData = new HashMap<String, String>();
+//        RequestObject request = new RequestObject();
+//
+//        try{
+//
+//            //rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//            StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
+//            requestData.put("method", parse.nextToken());
+//            String requestString = parse.nextToken();
+//            requestData.put("requestString", requestString); //Original browser request
+//
+//            if(requestString.contains("?")){
+//                index = requestString.indexOf("?");
+//                params = parseParams(requestString.substring(index+1));
+//                requestString = requestString.substring(0, index); //Without ?+parameters extension
+//
+//            }
+//
+//
+//            requestData.put("request", requestString); //save Without ?+parameters extension
+//
+//            requestString= requestString.substring(1);
+//
+//            index = requestString.indexOf("/");
+//            if(index>0){
+//            	requestData.put("destination", requestString.substring(0, index));
+//            }
+//            else {
+//            	requestData.put("destination", requestString);
+//            }
+//
+//            if(requestData.get("request").equals("/")) {
+//            	requestData.put("destination", "files");
+//            	requestData.put("request", "/files/index.html");
+//            	requestData.put("requestString", "/files/index.html");
+//            }
+//
+//            System.out.println("requeststring: " + requestData.get("requestString")) ;
+//            System.out.println("request: " + requestData.get("request")) ;
+//            System.out.println("destination: " + requestData.get("destination")) ;
+//
+//            requestData.put("version", parse.nextToken());
+//
+//            String line;
+//
+//            while(rawRequest.ready()) {
+//                line = rawRequest.readLine();
+//
+//                if(line.contains(": ")){
+//                    String [] keyValue = line.split(": ");
+//                    requestData.put(keyValue[0], keyValue[1]);
+//                }
+//                else if (!line.contains(": ") && !line.equals("")) {
+//                    requestData.put("body", line);
+//                }
+//                else if(line.equals("")&& requestData.containsKey("Content-Length")){
+//                    //String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
+//                    char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
+//                    rawRequest.read(body);
+//                    String bodyString = new String(body);
+//                    System.out.println(bodyString);
+//                    requestData.put("body", bodyString);
+//                }
+//            }
+//            System.out.println("request: " + requestData.get("request"));
+//            System.out.println("requestData:-----------------------");
+//            requestData.forEach((a,b)-> System.out.println(a + " : " + b));
+//            System.out.println("requestData------------------------");
+//        }catch(java.io.IOException e){
+//            System.out.println(e.getMessage());
+//        }
+//        request.setHeader(requestData);
+//        request.setParams(params);
+//
+//        return request;
+//    }
 
-        Map<String, String> params = new HashMap<String, String>();
-        Map<String, String> requestData = new HashMap<String, String>();
-        RequestObject request = new RequestObject();
-
-        try{
-
-            //rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
-            requestData.put("method", parse.nextToken());
-            String requestString = parse.nextToken();
-            requestData.put("requestString", requestString); //Original browser request
-            
-            if(requestString.contains("?")){
-                index = requestString.indexOf("?");
-                params = parseParams(requestString.substring(index+1));
-                requestString = requestString.substring(0, index); //Without ?+parameters extension
-                
-            }
-            
-            
-            requestData.put("request", requestString); //save Without ?+parameters extension
-            
-            requestString= requestString.substring(1);           
-            
-            index = requestString.indexOf("/");
-            if(index>0){               
-            	requestData.put("destination", requestString.substring(0, index));
-            }
-            else {
-            	requestData.put("destination", requestString);
-            }
-            
-            if(requestData.get("request").equals("/")) {
-            	requestData.put("destination", "files");
-            	requestData.put("request", "/files/index.html");
-            	requestData.put("requestString", "/files/index.html");
-            }
-            
-            System.out.println("requeststring: " + requestData.get("requestString")) ;
-            System.out.println("request: " + requestData.get("request")) ;
-            System.out.println("destination: " + requestData.get("destination")) ;
-            
-            requestData.put("version", parse.nextToken());
-            
-            String line;
-
-            while(rawRequest.ready()) {
-                line = rawRequest.readLine();
-
-                if(line.contains(": ")){
-                    String [] keyValue = line.split(": ");
-                    requestData.put(keyValue[0], keyValue[1]);
-                }
-                else if (!line.contains(": ") && !line.equals("")) {
-                    requestData.put("body", line);
-                }
-                else if(line.equals("")&& requestData.containsKey("Content-Length")){
-                    //String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
-                    char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
-                    rawRequest.read(body);
-                    String bodyString = new String(body);
-                    System.out.println(bodyString);
-                    requestData.put("body", bodyString);
-                }
-            }
-            System.out.println("request: " + requestData.get("request"));
-            System.out.println("requestData:-----------------------");
-            requestData.forEach((a,b)-> System.out.println(a + " : " + b));
-            System.out.println("requestData------------------------");
-        }catch(java.io.IOException e){
-            System.out.println(e.getMessage());
-        }
-        request.setHeader(requestData);
-        request.setParams(params);
-
-        return request;
-    }
-
-    //TODO parseParams() kan parsa både från body och url, samma resultat
-
-    //TODO CopyOnWrite arraylist är thread safe
-//TODO use AtomicLong or Int osv for threadsafe counters, counter.incrementAndGet()
-//TODO possible to overload a method for params?
 
     private Map<String, String> parseStrings(List<String> strings){
         String body = null;
