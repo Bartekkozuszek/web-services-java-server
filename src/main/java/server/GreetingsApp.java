@@ -13,10 +13,71 @@ public class GreetingsApp extends HTTPModule {
 	ResponseObject response;
 
 
-	String htmlPrefix = "<!DOCTYPE html><html><head><meta charset='ISO-8859-1'><title>Greetings!</title></head><body>"
-			+ "<h2>Welcome to the Greeting App</h2><h3>The most friendly app on the Internet</h3><hr><br>";
+	String htmlPrefix = "<!DOCTYPE html><html><head><meta charset='ISO-8859-1'><title>Greetings!</title><style>\n" +
+			"@import url(https://fonts.googleapis.com/css?family=Montserrat);\n" +
+			"html,\n" +
+			"body {\n" +
+			"  overflow: hidden;\n" +
+			"  margin: 0px;\n" +
+			"}\n" +
+			".background {\n" +
+			"  background-size: cover;\n" +
+			"  background-repeat: no-repeat;\n" +
+			"  background-position: center center;\n" +
+			"  overflow: hidden;\n" +
+			" position: fixed;\n" +
+			"  width: 100%;\n" +
+			"  background-image: url(/files/images/hello.jpg);\n" +
+			"\n" +
+			"}\n" +
+			"\n" +
+			".content-wrapper {\n" +
+			"  height: 100vh;\n" +
+			"  display: flex;\n" +
+			"  justify-content: center;\n" +
+			"  text-align: center;\n" +
+			"  flex-flow: column nowrap;\n" +
+			"  color: #fff;\n" +
+			"  font-family: Montserrat;\n" +
+			"  text-transform: uppercase;\n" +
+			"}\n" +
+			"\n" +
+			".content-title {\n" +
+			"  font-size: 12vh;\n" +
+			"  line-height: 1.4;\n" +
+			"}\n" +
+			"\n" +
+			"input[type=submit] {\n" +
+			"\tbackground: #42846c;\n" +
+			"    padding: 10px 20px;\n" +
+			"    text-transform: uppercase;\n" +
+			"    color: #ffffff;\n" +
+			"    font-family: montserrat;\n" +
+			"    font-weight: 600;\n" +
+			"    border: 0px;\n" +
+			"    transition: 0.2s;\n" +
+			"    cursor: pointer;\n" +
+			"}\n" +
+			"\n" +
+			"input[type=text] {\n" +
+			"padding: 10px 5px;\n" +
+			"text-transform: uppercase;\n" +
+			"font-family: montserrat;\n" +
+			"opacity: 0.8;\n" +
+			"}\n" +
+			"\n" +
+			"\n" +
+			"input[type=submit]:hover {\n" +
+			"background: #388267;\n" +
+			"}\n" +
+			"</style></head><body>"
+			+ "<div class=\"container\">\n" +
+			"<section class=\"background\">\n" +
+			"<div class=\"content-wrapper\"><h1 class=\"content-title\">The Greeting App</h1><p>The most friendly app on the Internet</p>";
 
-	String htmlPostfix = "<hr></body></html>";
+	String htmlPostfix = "</div>\n" +
+			"</section>\n" +
+			"</div></body></html>";
 
 	@Override
 	public ResponseObject get(RequestObject request, ResponseObject response) {
@@ -40,19 +101,23 @@ public class GreetingsApp extends HTTPModule {
 
 		if (route.size() > 1) {
 
-			contentBuilder.append("<h1>A really warm Welcome to you: ");
+			contentBuilder.append("<p>A really warm welcome to you</p> ");
 
 			for (int i = 1; i < route.size(); i++) {
 				contentBuilder.append(route.get(i) + " ");
 			}
 		} else {
-			contentBuilder.append("<h2>Greeting Request</h2><form action='' method='post'>Salutation:<br><input type='text' name='salutation' value='' placeholder = 'Mr'>");
-			contentBuilder.append("<br>First name:<br><input type='text' name='firstname' value='' placeholder = 'Bob'>");
-			contentBuilder.append("<br>Last name:<br><input type='text' name='lastname' value='' placeholder = 'Dobalina'><br><br>");
-			contentBuilder.append("<input type='submit' value='Submit'></form>");
+			contentBuilder.append("<p>Greeting Request</p>\n" +
+					"<form action='' method='post'>\n" +
+					"<input type='text' name='salutation' value='' placeholder = 'Title'>\n" +
+					"<input type='text' name='firstname' value='' placeholder = 'First Name'>\n" +
+					"<input type='text' name='lastname' value='' placeholder = 'Last Name'><br><br>\n" +
+					"<input type='submit' value='Submit'>\n" +
+					"</form>");
+
 		}
 
-		contentBuilder.append("</h1>" + htmlPostfix);
+		contentBuilder.append(htmlPostfix);
 
 //		response = new ResponseObject();
 		response.setData(contentBuilder.toString().getBytes());

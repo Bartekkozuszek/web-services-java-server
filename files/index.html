@@ -65,35 +65,42 @@ body {
   background-image: url(/files/images/json.jpg);
 }
 .background:nth-child(7) {
+  background-image: url(/files/images/greetings.jpg);
+}
+.background:nth-child(8) {
   background-image: url(/files/images/mrjohansson.jpg);
 }
 
 /* Set stacking context of slides */
 .background:nth-child(1) {
-  z-index: 7;
+  z-index: 8;
 }
 
 .background:nth-child(2) {
-  z-index: 6;
+  z-index: 7;
 }
 
 .background:nth-child(3) {
-  z-index: 5;
+  z-index: 6;
 }
 
 .background:nth-child(4) {
-  z-index: 4;
+  z-index: 5;
 }
 
 .background:nth-child(5) {
-  z-index: 3;
+  z-index: 4;
 }
 
 .background:nth-child(6) {
-  z-index: 2;
+  z-index: 3;
 }
 
 .background:nth-child(7) {
+  z-index: 2;
+}
+
+.background:nth-child(8) {
   z-index: 1;
 }
 
@@ -207,10 +214,16 @@ a:hover {
 	  </section>
 	  <section class="background">
 	    <div class="content-wrapper">
-	      <p class="content-title">JSON information</p>
-	      <p class="content-subtitle">Nullam tristique urna sed tellus ornare congue. Etiam vitae erat at nibh aliquam dapibus.</p>
+	      <p class="content-title">RESTFUL api DB</p>
+	      <p class="content-subtitle">MySql DB with CRUD operations that works best with Postman, Insomina or URL.</p>
 	    </div>
 	  </section>
+    <section class="background">
+      <div class="content-wrapper">
+        <p class="content-title">Greetings</p>
+        <a href="http://localhost:8081/greetings" class="content-subtitle">Go to the Greetings App >></a>
+      </div>
+    </section>
 	  <section class="background">
 	    <div class="content-wrapper">
 	      <p class="content-title">Contributers</p>
@@ -227,7 +240,7 @@ var isIe = (/MSIE/i.test(navigator.userAgent)) || (/Trident.*rv\:11\./i.test(nav
 var scrollSensitivitySetting = 30; //Increase/decrease this number to change sensitivity to trackpad gestures (up = less sensitive; down = more sensitive) 
 var slideDurationSetting = 600; //Amount of time for which slide is "locked"
 var currentSlideNumber = 0;
-var totalSlideNumber = 7; //$(".background").length
+var totalSlideNumber = 8; //$(".background").length
 
 // ------------- DETERMINE DELTA/SCROLL DIRECTION ------------- //
 function parallaxScroll(evt) {
