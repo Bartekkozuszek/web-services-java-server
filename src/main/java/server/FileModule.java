@@ -56,7 +56,6 @@ public class FileModule extends HTTPModule {
     }
 
 
-
     public String getContentType(String request){
 
         return super.getContentType(request);
