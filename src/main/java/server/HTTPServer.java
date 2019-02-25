@@ -4,15 +4,14 @@ import api.HTTPMethods;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URLDecoder;
 import java.util.*;
 
 public class HTTPServer implements Runnable{
 
     static final int PORT = 8081;
-    //static final String FILE_NOT_FOUND ="404.html";
+    static final String FILE_NOT_FOUND ="resources/404.html";
     //static final String DEFAULT_FILE = "src/index.html";
-    //static final File WEB_ROOT = new File(".");
+    static final File WEB_ROOT = new File(".");
     static final boolean verbose = true;
 
     private static Map<String, HTTPMethods> functions = new HashMap<String, HTTPMethods>();
@@ -31,30 +30,54 @@ public class HTTPServer implements Runnable{
         System.out.println(Thread.currentThread().getName());
         BufferedReader rawRequest = null;
 
-        try{
+        try {
             rawRequest = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        }catch(java.io.IOException e){
+
+            RequestObject request = requestToObject(rawRequest);
+            ResponseObject response = new ResponseObject();
+            String destination = request.getHeader().get("destination");
+            String httpMethod = request.getHeader().get("method");
+            System.out.println("method: " + httpMethod);
+
+            if (functions.containsKey(destination)) {
+                HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
+
+                if (httpMethod.equals("GET")) {
+                    response = m.get(request, response);
+                } else if (httpMethod.equals("HEAD")) {
+                    response = m.head(request, response);
+                } else if (httpMethod.equals("POST")) {
+                    response = m.post(request, response);
+                } else if (httpMethod.equals("DELETE")) {
+                    response = m.delete(request, response);
+                    
+                } else if (httpMethod.equals("PUT")) {
+                    response = m.put(request, response);
+                }
+                //else fileNotFound();
+            } else{
+                response = fileNotFound(response);
+            }
+            handleOutput(response, clientSocket);
+            clientSocket.close();
+        }catch(IOException e){
             System.out.println(e.getMessage());
         }
+    }
 
-        RequestObject request = requestToObject(rawRequest);
-        ResponseObject response = new ResponseObject();
-        String destination = request.getRequestData().get("destination");
-        String httpMethod = request.getRequestData().get("method");
-        System.out.println("method: " + httpMethod);
+    private ResponseObject fileNotFound(ResponseObject response) {
+        File file = new File(WEB_ROOT, FILE_NOT_FOUND);
+        System.out.println("file: " + file);
 
-        if(functions.containsKey(destination)){
-            HTTPMethods m = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
+        int fileLength = (int)file.length();
+        byte [] requestedFile = readFileData(file, fileLength);
 
-            if(httpMethod.equals("GET")){
-                response = m.get(request, response);
-            }
-            else if(httpMethod.equals("HEAD")){
-                response = m.head(request, response);
-            }
-        }
-        handleOutput(response, clientSocket);
+        response.setContentType("text/html");
+        response.setContentLength(fileLength);
+        response.setData(requestedFile);
+
+        return response;
     }
 
 
@@ -72,21 +95,19 @@ public class HTTPServer implements Runnable{
     private Map<String, String> parseParams(String request) throws UnsupportedEncodingException {
 
         Map<String, String> params = new HashMap<String, String>();
-        request = URLDecoder.decode(request, "UTF-8");
+      //  request = URLDecoder.decode(request, "UTF-8");
 
-
-        if(request.contains("?") && request.contains("=")){
-            request = request.substring(request.indexOf("?") + 1);
-            String [] tempParams = request.split("&");
-            for (String item: tempParams) {
-                String [] tempParam = item.split("=");
+     //   if (request.contains("?") && request.contains("=")) {
+     //       request = request.substring(request.indexOf("?") + 1);
+            String[] tempParams = request.split("&");
+            for (String item : tempParams) {
+                String[] tempParam = item.split("=");
                 params.put(tempParam[0], tempParam[1]);
             }
-            params.forEach((a,b)-> System.out.println(a + " : " + b));
+            params.forEach((a, b) -> System.out.println(a + " : " + b));
             return params;
         }
-        return null;
-    }
+     //   return null;
 
 
     private String parseFuncName(String request){
@@ -145,15 +166,40 @@ public class HTTPServer implements Runnable{
             StringTokenizer parse = new StringTokenizer(rawRequest.readLine());
             requestData.put("method", parse.nextToken());
             String requestString = parse.nextToken();
-            requestData.put("requestString", requestString);
-            params = parseParams(requestString);
-            requestData.put("request", requestString);
-            int index = requestString.indexOf("/", 2);
-            System.out.println("requeststring: " + requestString) ;
-            String destination = requestString.substring(1, index);
-            System.out.println("destination: " + destination);
-            requestData.put("destination", destination);
+            requestData.put("requestString", requestString); //Original browser request
+            
+            if(requestString.contains("?")){
+                index = requestString.indexOf("?");
+                params = parseParams(requestString.substring(index+1));
+                requestString = requestString.substring(0, index); //Without ?+parameters extension
+                
+            }
+            
+            
+            requestData.put("request", requestString); //save Without ?+parameters extension
+            
+            requestString= requestString.substring(1);           
+            
+            index = requestString.indexOf("/");
+            if(index>0){               
+            	requestData.put("destination", requestString.substring(0, index));
+            }
+            else {
+            	requestData.put("destination", requestString);
+            }
+            
+            if(requestData.get("request").equals("/")) {
+            	requestData.put("destination", "files");
+            	requestData.put("request", "/files/index.html");
+            	requestData.put("requestString", "/files/index.html");
+            }
+            
+            System.out.println("requeststring: " + requestData.get("requestString")) ;
+            System.out.println("request: " + requestData.get("request")) ;
+            System.out.println("destination: " + requestData.get("destination")) ;
+            
             requestData.put("version", parse.nextToken());
+            
             String line;
 
             while(rawRequest.ready()) {
@@ -166,11 +212,13 @@ public class HTTPServer implements Runnable{
                 else if (!line.contains(": ") && !line.equals("")) {
                     requestData.put("body", line);
                 }
-                else if(line.equals("")){
-                    char [] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
+                else if(line.equals("")&& requestData.containsKey("Content-Length")){
+                    //String bodyString = rawRequest.lines().collect(Collectors.joining(System.lineSeparator()));
+                    char[] body = new char[(Integer.parseInt(requestData.get("Content-Length")))];
                     rawRequest.read(body);
                     String bodyString = new String(body);
                     System.out.println(bodyString);
+                    requestData.put("body", bodyString);
                 }
             }
             System.out.println("request: " + requestData.get("request"));
@@ -180,7 +228,7 @@ public class HTTPServer implements Runnable{
         }catch(java.io.IOException e){
             System.out.println(e.getMessage());
         }
-        request.setRequestData(requestData);
+        request.setHeader(requestData);
         request.setParams(params);
 
         return request;
@@ -211,12 +259,24 @@ public class HTTPServer implements Runnable{
         try{
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
             BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
-
-            out.println("HTTP/1.1 200 OK");
+            
+            if(response.getStatusLine()== null) {
+            	out.println("HTTP/1.1 200 OK");
+            }
+            else {
+            	out.println(response.getStatusLine());
+            }
             out.println("Server: Java HTTP Server from mrjohansson : 1.0");
             out.println("date: " + new Date());
             out.println("content-type: " + response.getContentType());
-            out.println("content-length: " + response.getContentLength());
+            if(response.getContentLength()>0) {
+            	 out.println("content-length: " + response.getContentLength());
+            	}
+            
+            if(response.getLocation()!= null) {
+            	out.println("Location: " + response.getLocation());
+            }
+            
             out.println();
             out.flush();
 

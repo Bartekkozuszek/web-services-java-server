@@ -1,6 +1,7 @@
 package server;
 
 import api.HTTPModule;
+import api.RESTHandler;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -21,10 +22,25 @@ public class Main {
         //httpMethods.addAll(Arrays.asList(new HTTPGet(), new HTTPHead(), new HTTPPost()));
         //HTTPServer.getFunctions().add(new Calculator());
 
+
+        //Moduler läggs in här
         HTTPModule files = new FilesModule();
         HTTPModule calculator = new Calculator2();
+        HTTPModule reverse = new ReverseModule();
+        HTTPModule greetings = new  GreetingsApp();
+        HTTPModule resthandler = new  RESTHandler();
+        
+        
+        HTTPServer.getFunctions().put("reverse", reverse);
         HTTPServer.getFunctions().put("files", files);
         HTTPServer.getFunctions().put("calculator", calculator);
+        HTTPModule personAge = new PersonAge();
+        HTTPServer.getFunctions().put("personage", personAge);
+        HTTPServer.getFunctions().put("greetings", greetings);
+        HTTPServer.getFunctions().put("api", resthandler);
+
+
+
 
         //URLClassLoader ucl = createClassLoader(args[0]);
 
@@ -56,6 +72,7 @@ public class Main {
         }
     }
 
+    //Förbredd för service loader
     private static URLClassLoader createClassLoader(String fileLocation){
         File loc = new File(fileLocation);// hur sätts filelocation via args, ./lib?
 
