@@ -24,7 +24,7 @@ public class Main {
 
 
         //Moduler läggs in här
-        HTTPModule files = new FilesModule();
+        HTTPModule files = new FileModule();
         HTTPModule calculator = new Calculator2();
         HTTPModule reverse = new ReverseModule();
         HTTPModule greetings = new  GreetingsApp();

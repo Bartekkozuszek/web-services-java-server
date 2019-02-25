@@ -13,7 +13,6 @@ public class Calculator2 extends HTTPModule {
 
     @Override
     public ResponseObject get(RequestObject request, ResponseObject response){
-        System.out.println("i calculator");
         Map<String, String> p = request.getParams();
         char operator = p.get("operator").charAt(0);
         p.remove("operator");
@@ -77,12 +76,6 @@ public class Calculator2 extends HTTPModule {
         htmlBuilder.append("<div class=\"content-wrapper\">");
         htmlBuilder.append(" <h1 class=\"content-title\">Calculator</h1>");
 
-    /*    htmlBuilder.append("<h2>Greeting Request</h2><form action='' method='get'>Salutation:<br><input type='text' name='salutation' value='' placeholder = 'Mr'>");
-        htmlBuilder.append("<br>First name:<br><input type='text' name='firstname' value='' placeholder = 'Bob'>");
-        htmlBuilder.append("<br>Last name:<br><input type='text' name='lastname' value='' placeholder = 'Dobalina'><br><br>");
-        htmlBuilder.append("<input type='submit' value='Submit'></form>");
-
-*/
         htmlBuilder.append("<p class=\"content-subtitle\">In the URL, add ?v1=<span class=\"colored\">firstVariable</span>&v2=<span class=\"colored\">secondVariable</span>&operator=<span class=\"colored\">operator</span> e.g. ?v1=25&v2=58&operator=*</p>");
         htmlBuilder.append("<div class=\"calculator\">" + "<p>" + answerType + " output: " + " <span class=\"output\">" + output + "</span></p>");
         htmlBuilder.append("</div>");
@@ -103,30 +96,6 @@ public class Calculator2 extends HTTPModule {
 
 
     }
-//    public ResponseObject handleRequest(String request, Map<String, String> params) {
-//
-//        //char operator = params.get("operator").charAt(0);
-//        //params.remove("operator");
-//
-//        //List<String> nums = new ArrayList<String>(params.values());
-//        //calculate(nums, operator);
-//
-//        StringBuilder htmlBuilder = new StringBuilder();
-//        htmlBuilder.append("<!DOCTYPE html>");
-//        htmlBuilder.append("<html>");
-//        htmlBuilder.append("<body>");
-//        htmlBuilder.append("<h1>Calculator</>");
-//        htmlBuilder.append("<h2>"+ answerType + " output: " + output + "</h2>");
-//        htmlBuilder.append("</body>");
-//        htmlBuilder.append("</html>");
-//
-//        ResponseObject response = new ResponseObject();
-//        response.setData(htmlBuilder.toString().getBytes());
-//        response.setContentType("text/html");
-//        response.setContentLength(htmlBuilder.length());
-//
-//        return response;
-//    }
 
 
     private void calculate(List<String> nums, char operator){
@@ -139,7 +108,6 @@ public class Calculator2 extends HTTPModule {
 
                 switch (operator) {
                     case '*':
-                        System.out.println("multiplication");
                         output = output * Double.parseDouble(num);
                         answerType = "Product";
                         break;
@@ -156,7 +124,6 @@ public class Calculator2 extends HTTPModule {
                         break;
 
                 }
-
             }catch (Exception e) {
                 System.out.println("error parsing to int: " + e.getMessage());
             }
