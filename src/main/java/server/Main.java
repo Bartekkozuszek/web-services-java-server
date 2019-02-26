@@ -3,13 +3,8 @@ package server;
 import api.HTTPModule;
 import api.RESTHandler;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.ServerSocket;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.Date;
 
 import static server.HTTPServer.PORT;
@@ -20,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         HTTPModule files = new FileModule();
-        HTTPModule calculator = new Calculator2();
+        HTTPModule calculator = new Calculator();
         HTTPModule reverse = new ReverseModule();
         HTTPModule greetings = new  GreetingsApp();
         HTTPModule resthandler = new  RESTHandler();

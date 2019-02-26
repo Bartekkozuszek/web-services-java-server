@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Calculator2 extends HTTPModule {
+public class Calculator extends HTTPModule {
 
     private String answerType;
     double output;
