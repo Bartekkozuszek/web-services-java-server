@@ -29,7 +29,7 @@ public class ReverseModule extends HTTPModule {
             int fileLength = (int) getHtmlFile().length();
             byte[] requestedFile = readFileData(getHtmlFile(), fileLength);
 
-            response.setContentType(request.getContentType());
+            response.setContentType(request.getHeader().get("Content-Type"));
             response.setContentLength(fileLength);
             response.setData(requestedFile);
         } else {
@@ -37,7 +37,7 @@ public class ReverseModule extends HTTPModule {
             int fileLength = (int) file.length();
             byte[] requestedFile = readFileData(file, fileLength);
 
-            response.setContentType(request.getContentType());
+            response.setContentType(request.getHeader().get("Content-Type"));
             response.setContentLength(fileLength);
             response.setData(requestedFile);
         }

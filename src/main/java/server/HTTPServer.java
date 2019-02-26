@@ -35,7 +35,7 @@ public class HTTPServer implements Runnable {
 
             if (functions.containsKey(destination)) {
 
-                HTTPMethods service = functions.get(destination);// hämta ut en factory och instantiera ett objeckt av vald destination
+                HTTPMethods service = functions.get(destination);
 
                 switch (httpMethod) {
 

@@ -1,17 +1,12 @@
 package api;
 
-import com.google.gson.Gson;
+
 import server.RequestObject;
 import server.ResponseObject;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonWriter;
 import java.io.*;
 
 public abstract class HTTPModule implements HTTPMethods {
-
-    private static final String WEB_ROOT = ".";
 
     private String notSupported(){
         StringBuilder html = new StringBuilder();
@@ -40,30 +35,12 @@ public abstract class HTTPModule implements HTTPMethods {
         return setResponse(response);
     }
     public ResponseObject head(RequestObject request, ResponseObject response){
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(getResponse.getContentLength());
+        response = get(request, response);
         response.setData(null);
+
         return response;
     }
     public ResponseObject post(RequestObject request, ResponseObject response){
-
-        File file = new File(WEB_ROOT, "resources/jsonInfo.html");
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-        Writer writer = new OutputStreamWriter(out);
-        writer.write(request.getHeader().get("body"));
-        writer.close();
-        int fileLength = (int) file.length();
-        byte[] requestedFile = readFileData(file, fileLength);
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(fileLength);
-        response.setData(requestedFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return response;
     }
     public ResponseObject put(RequestObject request, ResponseObject response){
@@ -107,22 +84,4 @@ public abstract class HTTPModule implements HTTPMethods {
         }
         return data;
     }
-
-
-    protected void writeToJson(String obj){
-        Writer writer = null;
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);
-
-        try {
-            writer = new PrintWriter(json);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        JsonWriter jwriter = Json.createWriter(writer);
-        JsonObject jObject = Json.createObjectBuilder().add("name", "age").build();
-        jwriter.writeObject(jObject);
-        jwriter.close();
-    }
-
 }
