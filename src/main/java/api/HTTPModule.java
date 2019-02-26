@@ -8,9 +8,6 @@ import java.io.*;
 
 public abstract class HTTPModule implements HTTPMethods {
 
-    //private static final String WEB_ROOT = ".";
-    protected static final File WEB_ROOT = new File(".");
-
     private String notSupported(){
         StringBuilder html = new StringBuilder();
         html.append("<!DOCTYPE html>");
