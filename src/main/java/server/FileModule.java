@@ -8,7 +8,7 @@ import java.io.File;
 public class FileModule extends HTTPModule {
 
     private static final File WEB_ROOT = new File(".");
-
+    private static final String FILE_NOT_FOUND = "resources/404.html";
     @Override
     public ResponseObject get(RequestObject request, ResponseObject response) {
 
@@ -18,7 +18,7 @@ public class FileModule extends HTTPModule {
 
         if(!file.exists()) {
 
-            file = new File(WEB_ROOT, "404.html");
+            file = new File(WEB_ROOT, FILE_NOT_FOUND);
         }
 
         int fileLength = (int)file.length();
@@ -36,16 +36,6 @@ public class FileModule extends HTTPModule {
     public ResponseObject head(RequestObject request, ResponseObject response) {
 
         return super.head(request, response);
-    }
-
-
-    @Override
-    public ResponseObject post(RequestObject request, ResponseObject response) {
-        ResponseObject getResponse = get(request, response);
-        response.setContentType(getResponse.getContentType());
-        response.setContentLength(getResponse.getContentLength());
-
-        return response;
     }
 
 
